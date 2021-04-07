@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceProvider", "ServiceP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIClasses", "APIClasses\APIClasses.csproj", "{81B2133A-B843-4E0E-B733-01E74C4C176A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator", "Authenticator\Authenticator.csproj", "{F39817EF-AF3A-4193-BA17-EF0DB8A0673F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerInterfaceLib", "ServerInterfaceLib\ServerInterfaceLib.csproj", "{32563036-C03F-4CCF-A410-1213664E46AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{81B2133A-B843-4E0E-B733-01E74C4C176A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B2133A-B843-4E0E-B733-01E74C4C176A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81B2133A-B843-4E0E-B733-01E74C4C176A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F39817EF-AF3A-4193-BA17-EF0DB8A0673F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F39817EF-AF3A-4193-BA17-EF0DB8A0673F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F39817EF-AF3A-4193-BA17-EF0DB8A0673F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F39817EF-AF3A-4193-BA17-EF0DB8A0673F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32563036-C03F-4CCF-A410-1213664E46AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32563036-C03F-4CCF-A410-1213664E46AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32563036-C03F-4CCF-A410-1213664E46AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32563036-C03F-4CCF-A410-1213664E46AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
