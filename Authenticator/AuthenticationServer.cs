@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Text;
@@ -12,18 +13,23 @@ using ServerInterfaceLib;
 
 namespace Authenticator
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     class AuthenticationServer : IAuthenticationServer
     {
-        private string accountsPath;
-        private string tokensPath;
+        private readonly string accountsPath;
+        private readonly string tokensPath;
 
-        private Random random;
+        private readonly Random random;
 
         private AuthenticationServer(string accountsPath, string tokensPath)
         {
             this.accountsPath = accountsPath;
             this.tokensPath = tokensPath;
             this.random = new Random();
+
+            //Create files if do not already exist
+            using (StreamWriter w = File.AppendText(accountsPath)) ;
+            using (StreamWriter w = File.AppendText(tokensPath)) ;
         }
 
         /// <summary>
@@ -43,14 +49,17 @@ namespace Authenticator
             //See if user with matching username exists
             foreach (string line in accountsFile)
             {
-                string[] elements = line.Split(' ');
-
-                if (elements.Length != 2)
-                    throw new Exception("Broken File!!"); //TODO proper error handling
-
-                if (elements[0].Equals(name))
+                if (!line.Equals("")) //Skip empty lines
                 {
-                    return "Error: user with name already registered";
+                    string[] elements = line.Split('|');
+
+                    if (elements.Length != 2)
+                        throw new Exception("Broken File!!"); //TODO proper error handling
+
+                    if (elements[0].Equals(name))
+                    {
+                        return "Error: user with name already registered";
+                    }
                 }
             }
 
@@ -159,10 +168,11 @@ namespace Authenticator
 
             //Create service host 
             NetTcpBinding tcp = new NetTcpBinding();
-            string url = "net.tcp://0.0.0.0:8101/BusinessService";
+            string url = "net.tcp://0.0.0.0:8101/AuthenticationProvider";
 
             //Bind service host to server
-            ServiceHost host = new ServiceHost(typeof(AuthenticationServer));
+            //ServiceHost host = new ServiceHost(typeof(AuthenticationServer));
+            ServiceHost host = new ServiceHost(new AuthenticationServer(accountsPath, tokensPath)); //Bind service host to existing instance, making it a singleton //TODO is this ok?
             host.AddServiceEndpoint(typeof(IAuthenticationServer), tcp, url);
             host.Open();
 
