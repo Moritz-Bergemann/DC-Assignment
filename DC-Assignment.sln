@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerInterfaceLib", "Serve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePublishingConsole", "ServicePublishingConsole\ServicePublishingConsole.csproj", "{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registry", "Registry\Registry.csproj", "{4CADDB1D-C657-4B53-8370-2956BAFC87CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
