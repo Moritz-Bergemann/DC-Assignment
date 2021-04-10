@@ -71,7 +71,7 @@ namespace Authenticator
             {
                 using (StreamWriter fileWriter = File.AppendText(accountsPath))
                 {
-                    fileWriter.Write(formattedUserData);
+                    fileWriter.WriteLine(formattedUserData);
                     fileWriter.Close();
                 }
             }
@@ -93,7 +93,7 @@ namespace Authenticator
             bool match = false;
             foreach (string line in accountsFile)
             {
-                string[] elements = line.Split(' ');
+                string[] elements = line.Split('|');
 
                 if (elements.Length != 2)
                     throw new Exception("Broken File!!"); //TODO proper error handling
