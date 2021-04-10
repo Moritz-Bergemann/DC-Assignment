@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator", "Authentica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerInterfaceLib", "ServerInterfaceLib\ServerInterfaceLib.csproj", "{32563036-C03F-4CCF-A410-1213664E46AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePublishingConsole", "ServicePublishingConsole\ServicePublishingConsole.csproj", "{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{32563036-C03F-4CCF-A410-1213664E46AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32563036-C03F-4CCF-A410-1213664E46AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32563036-C03F-4CCF-A410-1213664E46AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E379BD6-E7B1-4FC6-A86B-C38FD28C69D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
