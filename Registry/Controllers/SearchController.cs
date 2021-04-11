@@ -3,7 +3,7 @@ using Registry.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-
+ 
 namespace Registry.Controllers
 {
     public class SearchController : ApiController
