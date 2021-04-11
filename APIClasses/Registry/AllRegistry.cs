@@ -18,6 +18,21 @@ namespace APIClasses.Registry
 
     public class EndpointData
     {
-        public string Endpoint;
+        public string ApiEndpoint;
+    }
+
+    public class PublishResult
+    {
+        public bool Success;
+        public string Message;
+
+        public PublishResult()
+        {
+        }
+        public PublishResult(bool success, string message)
+        {
+            Success = success;
+            Message = message;
+        }
     }
 }
