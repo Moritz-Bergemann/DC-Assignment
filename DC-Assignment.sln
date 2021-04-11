@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePublishingConsole", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registry", "Registry\Registry.csproj", "{4CADDB1D-C657-4B53-8370-2956BAFC87CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGUI", "ClientGUI\ClientGUI.csproj", "{0B145DB1-71BC-4671-A519-2D71D2822452}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CADDB1D-C657-4B53-8370-2956BAFC87CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B145DB1-71BC-4671-A519-2D71D2822452}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B145DB1-71BC-4671-A519-2D71D2822452}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B145DB1-71BC-4671-A519-2D71D2822452}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B145DB1-71BC-4671-A519-2D71D2822452}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
