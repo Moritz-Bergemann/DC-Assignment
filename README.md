@@ -8,6 +8,8 @@ Distributed Computing assignment
   - Test controllers overall
   - Add exception handling (likely just FindPrimesBetween)
   - Add authentication
+  - 3 input types to single input type that contains a list of numbers (and have the API verify the number of inputs is right, either on registry or at service itself)
+
 - **Registry**
   - Add authentication
 - **Client**
