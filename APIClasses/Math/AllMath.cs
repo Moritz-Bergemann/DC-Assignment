@@ -23,6 +23,7 @@ namespace APIClasses.Math
         }
     }
 
+    //TODO change these to a single input type that contains a list of numbers (and have the API verify the number of inputs is right, either on registry or at service itself)
     public class OneValueInput
     {
         public int Value;

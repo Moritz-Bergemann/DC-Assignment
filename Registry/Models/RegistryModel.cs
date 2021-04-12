@@ -59,6 +59,8 @@ namespace Registry.Models
         {
             List<RegistryData> registry = OpenRegistry();
 
+            //TODO check formats for everything are appropriate
+
             //Check service with this or name endpoint does not already exist in the database
             if (registry.Any(data => data.ApiEndpoint.Equals(newData.ApiEndpoint)))
             {
