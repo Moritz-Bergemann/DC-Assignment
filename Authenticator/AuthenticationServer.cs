@@ -160,8 +160,8 @@ namespace Authenticator
 
         private static void Main(string[] args)
         {
-            string accountsPath = "./accounts.txt";
-            string tokensPath = "./tokens.txt";
+            string accountsPath = "C:/dc-assignment-1/accounts.txt";
+            string tokensPath = "C:/dc-assignment-1/tokens.txt";
             
             Console.WriteLine("Starting authentication server...");
             Console.WriteLine($"Using accounts path '{accountsPath}' and tokens path '{tokensPath}'");

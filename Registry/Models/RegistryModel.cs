@@ -18,7 +18,7 @@ namespace Registry.Models
         //TODO make fileIO stuff atomic
 
         //Singleton management
-        private static string _dataModelPath = "./data.txt";
+        private static string _dataModelPath = "C:/dc-assignment-1/data.txt";
         public static RegistryModel Instance
         {
             get;
