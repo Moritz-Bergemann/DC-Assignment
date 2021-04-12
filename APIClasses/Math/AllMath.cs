@@ -6,38 +6,72 @@ namespace APIClasses.Math
     public class MathResult
     {
         public int Result;
+        public bool Success;
+        public string Message;
 
         public MathResult(int result)
         {
             Result = result;
+            Success = true;
+            Message = "success";
         }
-    }
 
-    public class BooleanResult
-    {
-        public bool Result;
-
-        public BooleanResult(bool result)
+        public MathResult(int result, bool success, string message)
         {
             Result = result;
+            Success = success;
+            Message = message;
+        }
+
+    }
+
+    public class MathListResult
+    {
+        public List<int> Results;
+        public bool Success;
+        public string Message;
+
+        public MathListResult(List<int> results, bool success, string message)
+        {
+            Results = results;
+            Success = success;
+            Message = message;
+        }
+        public MathListResult(List<int> results)
+        {
+            Results = results;
+            Success = true;
+            Message = "success";
         }
     }
 
-    public class OneValueInput
+    public class MathBooleanResult
     {
-        public int Value;
+        public bool Result;
+        public bool Success;
+        public string Message;
+
+        public MathBooleanResult(bool result, bool success, string message)
+        {
+            Result = result;
+            Success = success;
+            Message = message;
+        }
+        public MathBooleanResult(bool result)
+        {
+            Result = result;
+            Success = true;
+            Message = "success";
+        }
     }
 
-    public class TwoValueInput
+    public class MathInput
     {
-        public int Value1;
-        public int Value2;
-    }
-    
-    public class ThreeValueInput
-    {
-        public int Value1;
-        public int Value2;
-        public int Value3;
+        public List<int> Values;
+        
+        public MathInput(List<int> values)
+        {
+            Values = values;
+        }
     }
 }

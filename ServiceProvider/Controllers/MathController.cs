@@ -12,55 +12,88 @@ namespace ServiceProvider.Controllers
 {
     public class MathController : ApiController
     {
-        //TODO proper error handling
-
         [Route("api/add2")]
         [HttpPost]
-        public MathResult AddTwoNumbers(TwoValueInput input)
+        public MathResult AddTwoNumbers(MathInput input)
         {
-            return new MathResult(input.Value1 + input.Value2); 
+            if (input.Values.Count != 2)
+                return new MathResult(-1, false, "bad number of parameters");
+
+            return new MathResult(input.Values[0] + input.Values[1]); 
         }
 
         [Route("api/add3")]
         [HttpPost]
-        public MathResult AddThreeNumbers(ThreeValueInput input)
+        public MathResult AddThreeNumbers(MathInput input)
         {
-            return new MathResult(input.Value1 + input.Value2 + input.Value3);
+            if (input.Values.Count != 3)
+                return new MathResult(-1, false, "bad number of parameters");
+
+            return new MathResult(input.Values[0] + input.Values[1] + input.Values[2]);
         }
 
         [Route("api/multiply2")]
         [HttpPost]
-        public MathResult MultiplyTwoNumbers(TwoValueInput input)
+        public MathResult MultiplyTwoNumbers(MathInput input)
         {
-            return new MathResult(input.Value1 * input.Value2);
+            if (input.Values.Count != 2)
+                return new MathResult(-1, false, "bad number of parameters");
+
+            return new MathResult(input.Values[0] * input.Values[1]);
         }
 
         [Route("api/multiply3")]
         [HttpPost]
-        public MathResult MultiplyThreeNumbers(ThreeValueInput input)
+        public MathResult MultiplyThreeNumbers(MathInput input)
         {
-            return new MathResult(input.Value1 * input.Value2 * input.Value3);
+            if (input.Values.Count != 3)
+                return new MathResult(-1, false, "bad number of parameters");
+
+            return new MathResult(input.Values[0] * input.Values[1] * input.Values[2]);
         }
 
         [Route("api/prime-to")]
         [HttpPost]
-        public List<int> GetPrimesTo(OneValueInput input)
+        public MathListResult GetPrimesTo(MathInput input)
         {
-            return MathModel.GeneratePrimesUpTo(input.Value); //TODO catch ArgumentException
+            if (input.Values.Count != 1)
+                return new MathListResult(null, false, "bad number of parameters");
+
+            try
+            {
+                return new MathListResult(MathModel.GeneratePrimesUpTo(input.Values[0])); //TODO catch ArgumentException
+            }
+            catch (ArgumentException a)
+            {
+                return new MathListResult(null, false, "calculation error: " + a.Message);
+            }
         }
 
         [Route("api/prime-range")]
         [HttpPost]
-        public List<int> GetPrimesInRange(TwoValueInput input)
+        public MathListResult GetPrimesInRange(MathInput input)
         {
-            return MathModel.GeneratePrimesBetween(input.Value1, input.Value2); //TODO catch ArgumentException
+            if (input.Values.Count != 1)
+                return new MathListResult(null, false, "bad number of parameters");
+
+            try
+            {
+                return new MathListResult(MathModel.GeneratePrimesBetween(input.Values[0], input.Values[1])); //TODO catch ArgumentException
+            }
+            catch (ArgumentException a)
+            {
+                return new MathListResult(null, false, "calculation error: " + a.Message);
+            }
         }
 
         [Route("api/is-prime")]
         [HttpPost]
-        public BooleanResult IsPrimeNumber(OneValueInput input)
+        public MathBooleanResult IsPrimeNumber(MathInput input)
         {
-            return new BooleanResult(MathModel.IsPrime(input.Value));
+            if (input.Values.Count != 1)
+                return new MathBooleanResult(false, false, "bad number of parameters");
+
+            return new MathBooleanResult(MathModel.IsPrime(input.Values[0]));
         }
     }
 }
