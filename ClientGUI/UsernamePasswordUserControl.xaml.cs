@@ -23,9 +23,12 @@ namespace ClientGUI
         //Action to perform upon login
         private readonly Action<string, string> _confirmAction;
 
-        public UsernamePasswordUserControl(string prompt, Action<string, string> confirmAction)
+        private bool _closeOnExit;
+
+        public UsernamePasswordUserControl(string prompt, Action<string, string> confirmAction, bool closeOnExit)
         {
             _confirmAction = confirmAction;
+            _closeOnExit = closeOnExit;
 
             InitializeComponent();
 
@@ -38,6 +41,11 @@ namespace ClientGUI
             {
                 //Run action in delegator to run with username & password data
                 _confirmAction(UsernameInput.Text, PasswordInput.Text);
+
+                if (_closeOnExit)
+                {
+                    Window.GetWindow(this)?.Close();
+                }
             }
             else
             {

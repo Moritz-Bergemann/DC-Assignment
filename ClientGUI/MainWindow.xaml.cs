@@ -62,7 +62,7 @@ namespace ClientGUI
         private void Register_Button_Click(object sender, RoutedEventArgs e)
         {
             //Create username/password UserControl for registering (giving it register function to execute)
-            var registerControl = new UsernamePasswordUserControl("Enter your username and password to register in the database.", Register);
+            var registerControl = new UsernamePasswordUserControl("Enter your username and password to register in the database.", Register, true);
 
             Window registerWindow = new Window
             {
@@ -76,7 +76,7 @@ namespace ClientGUI
         private void Login_Button_Click(object sender, RoutedEventArgs e)
         {
             //Create username/password UserControl for login (giving it login function to execute)
-            var loginControl = new UsernamePasswordUserControl("Enter your username and password to log in.", Login);
+            var loginControl = new UsernamePasswordUserControl("Enter your username and password to log in.", Login, true);
 
             Window loginWindow = new Window
             {
