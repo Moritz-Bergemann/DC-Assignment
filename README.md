@@ -9,6 +9,16 @@ Distributed Computing assignment
   - Add exception handling (likely just FindPrimesBetween)
 - **Registry**
   - Add authentication
+  - The registry has an additional business logic before providing the service. Every client should 
+be authenticated before the service invocation. So, the registry expects a valid token with 
+every service call. The registry calls the validate function of the Authentication service and if 
+validated the service is provided. Otherwise, the following JSON output is sent:
+```
+{
+“Status”: “Denied”
+“Reason”: “Authentication Error”
+}
+```
 - **Client**
 
 
