@@ -88,16 +88,22 @@ namespace Registry.Models
 
             //Remove element from registry if it exists
             bool found = false;
+            int ii = 0;
             foreach (RegistryData data in registry)
             {
                 if (data.ApiEndpoint.Equals(endpointData.ApiEndpoint))
                 {
-                    registry.Remove(data);
+                    registry.RemoveAt(ii);
                     found = true;
                     break;
                 }
+
+                ii++;
             }
 
+            //Save the updated registry
+            SaveRegistry(registry);
+            
             return found;
         }
 
