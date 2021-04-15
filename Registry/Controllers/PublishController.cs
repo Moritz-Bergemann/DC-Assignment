@@ -18,6 +18,13 @@ namespace Registry.Controllers
         {
             PublishResult result = new PublishResult();
 
+            if (data == null)
+            {
+                result.Success = false;
+                result.Message = "Could not publish service: Empty input";
+                return result;
+            }
+
             try
             {
                 RegistryModel.Instance.Publish(data);

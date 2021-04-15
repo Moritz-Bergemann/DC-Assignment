@@ -65,13 +65,8 @@ namespace APIClasses.Math
         }
     }
 
-    public class OneValueInput
+    public class MathInput
     {
         public List<int> Values;
-        
-        public MathInput(List<int> values)
-        {
-            Values = values;
-        }
     }
 }

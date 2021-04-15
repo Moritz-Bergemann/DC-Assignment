@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.ServiceModel;
 using System.Text;
@@ -95,7 +96,7 @@ namespace ServicePublishingConsole
         {
             Console.WriteLine("This application allows you to publish services using the networked service publisher.\n" +
                               "Command List:" +
-                              "\nhelp - This output. \n" +
+                              "\thelp - This output. \n" +
                               "\tregister - Register a new user with the authentication service. \n" +
                               "\tlogin - Get a new session token using your user credentials that allows you to interact with the publishing database. \n" +
                               "\tpublish - Publish a service to the registry server (Requires authorisation). \n" +
@@ -170,9 +171,18 @@ namespace ServicePublishingConsole
                 RestRequest request = new RestRequest("api/publish");
                 request.AddJsonBody(data);
                 IRestResponse response = _registryClient.Post(request);
-                PublishResult result = JsonConvert.DeserializeObject<PublishResult>(response.Content);
 
-                Console.WriteLine($"Publish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    PublishResult result = JsonConvert.DeserializeObject<PublishResult>(response.Content);
+
+                    Console.WriteLine($"Publish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
+                }
+                else
+                {
+                    Console.WriteLine($"Publish failed - bad response");
+                }
+
             }
             catch (FormatException)
             {

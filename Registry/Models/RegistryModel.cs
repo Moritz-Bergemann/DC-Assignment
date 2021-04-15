@@ -108,7 +108,7 @@ namespace Registry.Models
 
             try
             {
-                registry = JsonConvert.DeserializeObject<List<RegistryData>>(_dataPath); //TODO validation here
+                registry = JsonConvert.DeserializeObject<List<RegistryData>>(File.ReadAllText(_dataPath)); //TODO validation here
             }
             catch (Exception e)
             {
@@ -125,6 +125,11 @@ namespace Registry.Models
                 {
                     throw;
                 }
+            }
+
+            if (registry == null)
+            {
+                registry = new List<RegistryData>();
             }
 
             return registry;
