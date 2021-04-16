@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ServiceSummaryUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UsernamePasswordUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -71,6 +75,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceSummaryUserControl.xaml.cs">
+      <DependentUpon>ServiceSummaryUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UsernamePasswordUserControl.xaml.cs">
       <DependentUpon>UsernamePasswordUserControl.xaml</DependentUpon>

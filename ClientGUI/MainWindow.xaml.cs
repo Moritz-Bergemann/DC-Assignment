@@ -87,5 +87,19 @@ namespace ClientGUI
             loginWindow.Show();
 
         }
+
+        private void Search_Service_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Show_All_Services_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+        }
     }
 }
