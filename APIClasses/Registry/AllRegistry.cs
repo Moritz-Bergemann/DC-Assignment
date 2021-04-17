@@ -21,14 +21,23 @@ namespace APIClasses.Registry
         public string ApiEndpoint;
     }
 
+    public class SearchData
+    {
+        public string Query;
+
+        public SearchData(string query)
+        {
+            Query = query;
+        }
+    }
+
     public class PublishResult
     {
         public bool Success;
         public string Message;
 
         public PublishResult()
-        {
-        }
+        { }
         public PublishResult(bool success, string message)
         {
             Success = success;
