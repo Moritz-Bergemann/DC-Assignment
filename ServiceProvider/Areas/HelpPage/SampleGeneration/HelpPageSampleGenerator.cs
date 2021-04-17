@@ -136,7 +136,7 @@ namespace ServiceProvider.Areas.HelpPage
         }
 
         /// <summary>
-        /// Search for samples that are provided directly through <see cref="ActionSamples"/>.
+        /// Query for samples that are provided directly through <see cref="ActionSamples"/>.
         /// </summary>
         /// <param name="controllerName">Name of the controller.</param>
         /// <param name="actionName">Name of the action.</param>

@@ -208,9 +208,8 @@ namespace ServicePublishingConsole
                 RestRequest request = new RestRequest("api/unpublish");
                 request.AddJsonBody(data);
                 IRestResponse response = _registryClient.Post(request);
-                PublishResult result = JsonConvert.DeserializeObject<PublishResult>(response.Content);
+                List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
 
-                Console.WriteLine($"Unpublish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
             }
             catch (NullReferenceException)
             {

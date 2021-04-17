@@ -8,11 +8,11 @@ namespace Registry.Controllers
 {
     public class SearchController : ApiController
     {
-        [Route("api/Search/{query}")]
-        [HttpGet]
-        public List<RegistryData> Search(string query)
+        [Route("api/search/")]
+        [HttpPost]
+        public List<RegistryData> Search(SearchData data)
         {
-            return RegistryModel.Instance.Search(query);
+            return RegistryModel.Instance.Search(data.Query);
         }
 
         [Route("api/all")]

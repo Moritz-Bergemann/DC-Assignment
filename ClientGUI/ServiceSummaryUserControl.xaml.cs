@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using APIClasses.Registry;
 
 namespace ClientGUI
 {
@@ -20,21 +21,19 @@ namespace ClientGUI
     /// </summary>
     public partial class ServiceSummaryUserControl : UserControl
     {
-        private Action<string, int> _testAction;
-        private string _operandType;
-        private int _numOperands;
+        private readonly Action<RegistryData> _testAction;
+        private readonly RegistryData _serviceData;
 
-        public ServiceSummaryUserControl(Action<string, int> testAction, int numOperands, string operandType)
+        public ServiceSummaryUserControl(Action<RegistryData> testAction, RegistryData serviceData)
         {
             _testAction = testAction;
-            _numOperands = numOperands;
-            _operandType = operandType;
+            _serviceData = serviceData;
             InitializeComponent();
         }
 
         private void Test_Button_Click(object sender, RoutedEventArgs e)
         {
-            _testAction(_operandType, _numOperands);
+            _testAction(_serviceData);
         }
     }
 }

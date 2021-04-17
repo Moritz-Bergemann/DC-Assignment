@@ -42,7 +42,7 @@ namespace Registry.Models
 
             List<RegistryData> registry = OpenRegistry();
 
-            //Search for elements containing search query
+            //Query for elements containing search query
             return registry.Where(data => data.Description.Contains(query)).ToList();
         }
 

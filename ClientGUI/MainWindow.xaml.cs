@@ -1,7 +1,12 @@
-﻿using RestSharp;
+﻿using System.Collections.Generic;
+using RestSharp;
 using ServerInterfaceLib;
 using System.ServiceModel;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Controls;
+using APIClasses.Registry;
+using Newtonsoft.Json;
 
 namespace ClientGUI
 {
@@ -84,22 +89,48 @@ namespace ClientGUI
                 Content = loginControl,
                 SizeToContent = SizeToContent.WidthAndHeight
             };
-            loginWindow.Show();
 
+            loginWindow.Show();
         }
 
         private void Search_Service_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            string query = SearchBox.Text;
+
+            //Make request for registry search result
+            RestRequest request = new RestRequest("api/search");
+            SearchData searchData = new SearchData(query);
+            request.AddJsonBody(searchData);
+            IRestResponse response = _registryClient.Post(request);
+            List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+
+            //Fill services list with retrieved list
+            FillServicesList(result);
         }
 
         private void Show_All_Services_Button_Click(object sender, RoutedEventArgs e)
         {
-            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
-            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
-            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
-            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
-            ServicesListGrid.Children.Add(new ServiceSummaryUserControl(null, 1, "beans"));
+            //Make request for registry search result
+            RestRequest request = new RestRequest("api/all");
+            IRestResponse response = _registryClient.Get(request);
+            List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+
+            //Fill services list with retrieved list
+            FillServicesList(result);
+        }
+
+        private void FillServicesList(List<RegistryData> services)
+        {
+            List<UserControl> controlsList = new List<UserControl>();
+            if (services.Count == 0)
+            {
+                services.ForEach(registryData => controlsList.Add(new ServiceSummaryUserControl(null, registryData)));
+            }
+            else
+            {
+                //TODO show something here
+            }
+            ServicesItemsControl.ItemsSource = controlsList;
         }
     }
 }
