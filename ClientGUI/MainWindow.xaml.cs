@@ -19,7 +19,7 @@ namespace ClientGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string[] allowedOperandTypes = { "integer" }; //NOTE - currently only integer supported, but more can be added here
+        public static string[] AllowedOperandTypes = { "integer" }; //NOTE - currently only integer supported, but more can be added here
 
         private IAuthenticationServer _authServer;
         private RestClient _registryClient;
@@ -136,7 +136,7 @@ namespace ClientGUI
             List<UIElement> controlsList = new List<UIElement>();
             if (services.Count > 0)
             {
-                services.ForEach(registryData => controlsList.Add(new ServiceSummaryUserControl(null, registryData)));
+                services.ForEach(registryData => controlsList.Add(new ServiceSummaryUserControl(PrepareServiceTest, registryData)));
             }
             else
             {
@@ -150,7 +150,7 @@ namespace ClientGUI
         private void PrepareServiceTest(RegistryData serviceData)
         {
             //Check service data is valid for testing
-            if (!allowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
+            if (!AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
             {
                 MessageBox.Show($"This service cannot be tested as the given operand type '{serviceData.OperandType}' is not permitted.", "Cannot test", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -173,15 +173,19 @@ namespace ClientGUI
             _operandType = serviceData.OperandType; //TODO maybe check the type here?
             _numOperands = serviceData.NumOperands;
 
-            List<TextBox> inputBoxes = new List<TextBox>();
+            //Show service fields & description
+            ServiceName.Text = serviceData.Name;
+            ServiceDescription.Text = serviceData.Description;
+            OperandType.Text = serviceData.OperandType;
 
+            //Show input boxes for service
+            List<TextBox> inputBoxes = new List<TextBox>();
             for (int ii = 0; ii < serviceData.NumOperands; ii++)
             {
                 TextBox newBox = new TextBox();
                 newBox.Name = $"ServiceInput{ii + 1}";
                 inputBoxes.Add(newBox);
             }
-
             ServiceInputsItemsControl.ItemsSource = inputBoxes;
         }
 
@@ -199,10 +203,8 @@ namespace ClientGUI
 
             foreach (UIElement element in ServiceInputsItemsControl.Items)
             {
-                if (element is TextBox)
+                if (element is TextBox box)
                 {
-                    TextBox box = (TextBox) element;
-
                     switch (_operandType) //NOTE - add more statements to switch to support more operand types
                     {
                         case "integer":
@@ -220,16 +222,13 @@ namespace ClientGUI
                         default:
                             //Should only be thrown if the operand type was somehow not checked before assignment (fatal error)
                             throw new ArgumentException("Attempting API test with invalid argument type");
-                            break;
                     }
                 }
             }
 
             //Sanity check
             if (input.Values.Count != _numOperands)
-            {
                 throw new ArgumentException("Number of service operands retrieved and required do not match");
-            }
 
             //Make request to API endpoint
             RestRequest request = new RestRequest(_apiEndpoint);
@@ -242,6 +241,12 @@ namespace ClientGUI
                 MessageBox.Show("The client failed to establish a connection with the given service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            //Display result at bottom
+            MathResult result = JsonConvert.DeserializeObject<MathResult>(response.Content);
+
+            //Display result if successful and error message otherwise
+            ServiceResult.Text = result.Success ? result.Result : result.Message;
         }
 
 
