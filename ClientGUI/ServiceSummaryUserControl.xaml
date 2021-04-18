@@ -8,7 +8,7 @@
              d:DesignHeight="100" d:DesignWidth="300">
     <Grid>
         <Button Content="Test" HorizontalAlignment="Left" Margin="210,30,0,30" Width="80" Click="Test_Button_Click"/>
-        <TextBlock HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" Text="NAME" VerticalAlignment="Top" Width="195" FontSize="18"/>
-        <TextBlock HorizontalAlignment="Left" Height="50" Margin="10,40,0,0" TextWrapping="Wrap" Text="DESCRIPTION" VerticalAlignment="Top" Width="195"/>
+        <TextBlock Name="ServiceName" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" Text="NAME" VerticalAlignment="Top" Width="195" FontSize="18"/>
+        <TextBlock Name="ServiceDescription" HorizontalAlignment="Left" Height="50" Margin="10,40,0,0" TextWrapping="Wrap" Text="DESCRIPTION" VerticalAlignment="Top" Width="195"/>
     </Grid>
 </UserControl>

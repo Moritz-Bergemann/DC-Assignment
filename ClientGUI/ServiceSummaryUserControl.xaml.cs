@@ -29,6 +29,10 @@ namespace ClientGUI
             _testAction = testAction;
             _serviceData = serviceData;
             InitializeComponent();
+
+            //Set values of UI components
+            ServiceName.Text = serviceData.Name;
+            ServiceDescription.Text = serviceData.Description;
         }
 
         private void Test_Button_Click(object sender, RoutedEventArgs e)

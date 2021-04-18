@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace APIClasses.Math
 {
@@ -67,6 +68,6 @@ namespace APIClasses.Math
 
     public class MathInput
     {
-        public List<int> Values;
+        public List<int> Values = new List<int>();
     }
 }

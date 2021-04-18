@@ -15,9 +15,16 @@
         <Button Content="Show ALL Services" HorizontalAlignment="Left" Height="21" Margin="149,124,0,0" VerticalAlignment="Top" Width="110" Click="Show_All_Services_Button_Click"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="345" Margin="396,75,0,0" Stroke="Black" VerticalAlignment="Top" Width="2"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="2" Margin="0,75,-0.4,0" Stroke="Black" VerticalAlignment="Top" Width="794"/>
-        <TextBlock HorizontalAlignment="Left" Margin="576,240,0,0" TextWrapping="Wrap" Text="Testing zone" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="403,82,0,0" TextWrapping="Wrap" Text="Testing zone" VerticalAlignment="Top"/>
         <ScrollViewer Name="ServicesListScroll" HorizontalAlignment="Left" Height="255" Margin="20,155,0,0" VerticalAlignment="Top" Width="350">
             <ItemsControl Name="ServicesItemsControl" RenderTransformOrigin="0.381,0.416"></ItemsControl>
         </ScrollViewer>
+
+        <ItemsControl Name="ServiceInputsItemsControl" RenderTransformOrigin="0.381,0.416" Margin="432,163,48,117">
+        </ItemsControl>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Result:" Width="43" Margin="427,352,0,50" RenderTransformOrigin="6.969,10.98"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Width="256" Margin="475,352,0,20" RenderTransformOrigin="0.158,1.872"><Run/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Inputs:" Width="57" Margin="432,142,0,261"/>
+        <Button Content="Run Service" HorizontalAlignment="Left" Margin="563,318,0,0" VerticalAlignment="Top" Width="75" Click="Run_Service_Button_Click"/>
     </Grid>
 </Window>

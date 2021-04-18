@@ -25,7 +25,7 @@ namespace Registry.Models
         } = new RegistryModel(_dataModelPath);
 
 
-        private string _dataPath;
+        private readonly string _dataPath;
 
         public RegistryModel(string dataPath)
         {
