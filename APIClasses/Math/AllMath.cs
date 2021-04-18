@@ -10,6 +10,10 @@ namespace APIClasses.Math
         public bool Success;
         public string Message;
 
+        //Required empty constructor
+        public MathResult()
+        { }
+
         public MathResult(int result)
         {
             Result = result.ToString();
