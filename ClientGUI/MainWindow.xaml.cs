@@ -19,8 +19,6 @@ namespace ClientGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string[] AllowedOperandTypes = { "integer" }; //NOTE - currently only integer supported, but more can be added here
-
         private IAuthenticationServer _authServer;
         private RestClient _registryClient;
         private RestClient _serviceClient;
@@ -150,7 +148,7 @@ namespace ClientGUI
         private void PrepareServiceTest(RegistryData serviceData)
         {
             //Check service data is valid for testing
-            if (!AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
+            if (!Formats.AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
             {
                 MessageBox.Show($"This service cannot be tested as the given operand type '{serviceData.OperandType}' is not permitted.", "Cannot test", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;

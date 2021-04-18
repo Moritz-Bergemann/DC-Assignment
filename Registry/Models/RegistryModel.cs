@@ -15,10 +15,9 @@ namespace Registry.Models
 {
     public class RegistryModel
     {
-        //TODO make fileIO stuff atomic
-
         //Singleton management
         private static string _dataModelPath = "C:/dc-assignment-1/data.txt";
+
         public static RegistryModel Instance
         {
             get;
@@ -60,7 +59,11 @@ namespace Registry.Models
             List<RegistryData> registry = OpenRegistry();
 
             //TODO check formats for everything are appropriate
+            if (!Formats.AllowedOperandTypes.Any(s => s.Equals(newData.OperandType)))
+            {
 
+            }            
+            
             //Check service with this or name endpoint does not already exist in the database
             if (registry.Any(data => data.ApiEndpoint.Equals(newData.ApiEndpoint)))
             {
