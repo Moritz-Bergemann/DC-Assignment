@@ -57,11 +57,9 @@ namespace ServicePublishingConsole
                                 break;
                             case "register":
                                 Register();
-                                //new ArraySegment<string>(userInputElements, 1, userInputElements.Length - 1).Array //TODO remove this
                                 break;
                             case "login":
                                 Login();
-                                //new ArraySegment<string>(userInputElements, 1, userInputElements.Length - 1).Array //TODO remove this
                                 break;
                             case "publish":
                                 Publish();

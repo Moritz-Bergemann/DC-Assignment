@@ -54,7 +54,7 @@ namespace Authenticator
                     string[] elements = line.Split('|');
 
                     if (elements.Length != 2)
-                        throw new Exception("Broken File!!"); //TODO proper error handling
+                        throw new FormatException("Invalid format for registry file");
 
                     if (elements[0].Equals(name))
                     {
@@ -96,7 +96,7 @@ namespace Authenticator
                 string[] elements = line.Split('|');
 
                 if (elements.Length != 2)
-                    throw new Exception("Broken File!!"); //TODO proper error handling
+                    throw new FormatException("Invalid format for registry file");
 
                 if (elements[0].Equals(name) && elements[1].Equals(password))
                 {
@@ -105,7 +105,7 @@ namespace Authenticator
                 }
             }
 
-            int token = -1; //Token is -1 (indicating login failed) by default TODO get this checked
+            int token = -1; //Token is -1 (indicating login failed) by default
 
             if (match)
             {
@@ -123,7 +123,7 @@ namespace Authenticator
                 }
 
                 //Write token to file
-                using (StreamWriter tokenFileWriter = File.AppendText(tokensPath)) //TODO what happens if it cooks the fileIO 
+                using (StreamWriter tokenFileWriter = File.AppendText(tokensPath))
                 {
                     tokenFileWriter.WriteLine(token.ToString());
                 } 
@@ -171,8 +171,7 @@ namespace Authenticator
             string url = "net.tcp://0.0.0.0:8101/AuthenticationProvider";
 
             //Bind service host to server
-            //ServiceHost host = new ServiceHost(typeof(AuthenticationServer));
-            ServiceHost host = new ServiceHost(new AuthenticationServer(accountsPath, tokensPath)); //Bind service host to existing instance, making it a singleton //TODO is this ok?
+            ServiceHost host = new ServiceHost(new AuthenticationServer(accountsPath, tokensPath)); //Bind service host to existing instance, making it a singleton
             host.AddServiceEndpoint(typeof(IAuthenticationServer), tcp, url);
             host.Open();
 

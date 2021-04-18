@@ -56,7 +56,7 @@ namespace ServiceProvider.Controllers
 
             try
             {
-                return new MathResult(MathModel.GeneratePrimesUpTo(input.Values[0])); //TODO catch ArgumentException
+                return new MathResult(MathModel.GeneratePrimesUpTo(input.Values[0]));
             }
             catch (ArgumentException a)
             {
@@ -73,7 +73,7 @@ namespace ServiceProvider.Controllers
 
             try
             {
-                return new MathResult(MathModel.GeneratePrimesBetween(input.Values[0], input.Values[1])); //TODO catch ArgumentException
+                return new MathResult(MathModel.GeneratePrimesBetween(input.Values[0], input.Values[1]));
             }
             catch (ArgumentException a)
             {

@@ -53,7 +53,6 @@ namespace ClientGUI
             _authServer = serverChannelFactory.CreateChannel();
         }
         
-        //TODO these probably should go somewhere else
         private void Login(string username, string password)
         {
             //TODO async display loading
@@ -96,7 +95,7 @@ namespace ClientGUI
             //Show result in login status
             string registerResultText =
                 result.Equals("successfully registered") ? "Register Successful!" : "Register failed.";
-            MessageBox.Show(registerResultText, "Registration result", MessageBoxButton.OK); //TODO
+            MessageBox.Show(registerResultText, "Registration result", MessageBoxButton.OK);
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)
@@ -168,7 +167,7 @@ namespace ClientGUI
 
             //Set up fields for calling API service
             _apiEndpoint = serviceData.ApiEndpoint;
-            _operandType = serviceData.OperandType; //TODO maybe check the type here?
+            _operandType = serviceData.OperandType;
             _numOperands = serviceData.NumOperands;
 
             //Show service fields & description
