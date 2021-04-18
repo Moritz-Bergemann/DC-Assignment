@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using RestSharp;
 using ServerInterfaceLib;
 using System.ServiceModel;
@@ -59,8 +60,18 @@ namespace ClientGUI
         {
             //TODO async display loading
 
-            //Attempt login
-            int token = _authServer.Login(username, password);
+
+            int token;
+            try
+            {
+                //Attempt login
+                token = _authServer.Login(username, password);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show("The client failed to establish a connection with the authentication service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             _loginToken = token;
 
@@ -73,7 +84,16 @@ namespace ClientGUI
             //TODO async display loading
 
             //Attempt login
-            string result = _authServer.Register(username, password);
+            string result;
+            try
+            {
+                result = _authServer.Register(username, password);
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show("The client failed to establish a connection with the authentication service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             //Show result in login status
             string registerResultText =
@@ -216,6 +236,12 @@ namespace ClientGUI
             request.AddJsonBody(input);
 
             IRestResponse response = _serviceClient.Post(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBox.Show("The client failed to establish a connection with the given service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
 
@@ -228,6 +254,13 @@ namespace ClientGUI
             SearchData searchData = new SearchData(query);
             request.AddJsonBody(searchData);
             IRestResponse response = _registryClient.Post(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBox.Show("The client failed to establish a connection with the registry service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
 
             //Fill services list with retrieved list
@@ -239,6 +272,13 @@ namespace ClientGUI
             //Make request for registry search result
             RestRequest request = new RestRequest("api/all");
             IRestResponse response = _registryClient.Get(request);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                MessageBox.Show("The client failed to establish a connection with the registry service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
 
             //Fill services list with retrieved list
