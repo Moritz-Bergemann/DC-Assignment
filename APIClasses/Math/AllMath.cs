@@ -23,7 +23,7 @@ namespace APIClasses.Math
 
         public MathResult(List<int> result)
         {
-            Result = result.ToString();
+            Result = string.Join(", ", result);
             Success = true;
             Message = "success";
         }
