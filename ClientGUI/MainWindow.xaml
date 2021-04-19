@@ -21,15 +21,17 @@
             <ItemsControl Name="ServicesItemsControl" RenderTransformOrigin="0.381,0.416"></ItemsControl>
         </ScrollViewer>
 
-        <ItemsControl Name="ServiceInputsItemsControl" RenderTransformOrigin="0.381,0.416" Margin="432,176,22,154">
+        <ItemsControl Name="ServiceInputsItemsControl" RenderTransformOrigin="0.381,0.416" Margin="427,182,26.6,162.4">
         </ItemsControl>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Result:" Width="43" Margin="435,362,0,40" RenderTransformOrigin="6.969,10.98"/>
-        <TextBlock Name="ServiceResult" HorizontalAlignment="Left" TextWrapping="Wrap" Width="256" Margin="483,362,0,10" RenderTransformOrigin="0.158,1.872"><Run/><LineBreak/><Run/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Inputs:" Width="57" Margin="432,155,0,298"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Result:" Width="43" Margin="435,362,0,25.4" RenderTransformOrigin="6.969,10.98"/>
+        <ScrollViewer Name="ServiceResultScroll" HorizontalAlignment="Left" Height="98" Margin="483,362,0,0" VerticalAlignment="Top" Width="256">
+            <TextBlock Name="ServiceResult" HorizontalAlignment="Left" TextWrapping="Wrap" Width="256" ><Run/><LineBreak/><Run/></TextBlock>
+        </ScrollViewer>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Inputs:" Width="57" Margin="427,158,0,288.4"/>
         <Button Content="Run Service" HorizontalAlignment="Left" Margin="637,320,0,0" VerticalAlignment="Top" Width="75" Click="Run_Service_Button_Click"/>
         <TextBlock Name="ServiceName" HorizontalAlignment="Left" Margin="427,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343"/>
         <TextBlock Name="ServiceDescription" HorizontalAlignment="Left" Margin="427,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="32" FontSize="20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="603,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="16" Text="Operand Type:"/>
+        <TextBlock HorizontalAlignment="Left" Margin="603,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="27" Text="Operand Type:"/>
         <TextBlock Name="OperandType" HorizontalAlignment="Left" Margin="689,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="16"><Run/><LineBreak/><Run/></TextBlock>
     </Grid>
 </Window>
