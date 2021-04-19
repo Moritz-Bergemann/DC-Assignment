@@ -46,6 +46,7 @@
     <Compile Include="Registry\AllRegistry.cs" />
     <Compile Include="Registry\Formats.cs" />
     <Compile Include="Security\AllSecurity.cs" />
+    <Compile Include="Security\AuthenticationException.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

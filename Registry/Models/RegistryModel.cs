@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
 using System.Web;
 using APIClasses.Registry;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServerInterfaceLib;
 using ServiceProvider.Models;
 
 namespace Registry.Models
@@ -17,6 +19,7 @@ namespace Registry.Models
     {
         //Singleton management
         private static string _dataModelPath = "C:/dc-assignment-1/data.txt";
+        private static string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
 
         public static RegistryModel Instance
         {
@@ -26,9 +29,16 @@ namespace Registry.Models
 
         private readonly string _dataPath;
 
+        private IAuthenticationServer _authServer;
+
         public RegistryModel(string dataPath)
         {
             _dataPath = dataPath;
+
+            //Create connection factory for connection to auth server
+            NetTcpBinding tcp = new NetTcpBinding();
+            ChannelFactory<IAuthenticationServer> serverChannelFactory = new ChannelFactory<IAuthenticationServer>(tcp, authUrl);
+            _authServer = serverChannelFactory.CreateChannel();
 
             //Create file at path in case it doesn't exist
             using (File.AppendText(dataPath)) ;
@@ -108,6 +118,32 @@ namespace Registry.Models
             SaveRegistry(registry);
             
             return found;
+        }
+
+        /// <summary>
+        /// Tests authentication on the authentication server.
+        /// </summary>
+        /// <param name="token">Authentication token to test</param>
+        /// <returns></returns>
+        public bool TestAuthentication(int token)
+        {
+            string validationResult= _authServer.Validate(token);
+
+            bool result;
+
+            if (validationResult.Equals("validated"))
+            {
+                result = true;
+            } else if (validationResult.Equals("not validated"))
+            {
+                result = false;
+            }
+            else
+            {
+                throw new RegistryException("Could not connect to authentication server");
+            }
+
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

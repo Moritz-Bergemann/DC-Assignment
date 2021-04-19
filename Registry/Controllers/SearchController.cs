@@ -10,16 +10,35 @@ namespace Registry.Controllers
     {
         [Route("api/search/")]
         [HttpPost]
-        public List<RegistryData> Search(SearchData data)
+        public SearchResponse Search(SearchData data)
         {
-            return RegistryModel.Instance.Search(data.Query);
+            //Check the token on the registry server
+            try
+            {
+                if (RegistryModel.Instance.TestAuthentication(data.Token))
+                {
+                    List<RegistryData> searchResult = RegistryModel.Instance.Search(data.Query);
+
+                    return new SearchResponse(true, null, searchResult);
+                }
+                else
+                {
+                    return new SearchResponse(false, "Authentication Error", null);
+                }
+            }
+            catch
+            {
+                return new SearchResponse(false, "Connection to authentication server failed", null);
+            }
         }
 
         [Route("api/all")]
         [HttpGet]
-        public List<RegistryData> AllServices()
+        public SearchResponse AllServices()
         {
-            return RegistryModel.Instance.All();
+            List<RegistryData> searchResult = RegistryModel.Instance.All();
+
+            return new SearchResponse(true, null, searchResult);
         }
     }
 }

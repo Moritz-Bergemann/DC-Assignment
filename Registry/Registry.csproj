@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -204,6 +205,10 @@
     <ProjectReference Include="..\APIClasses\APIClasses.csproj">
       <Project>{81B2133A-B843-4E0E-B733-01E74C4C176A}</Project>
       <Name>APIClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerInterfaceLib\ServerInterfaceLib.csproj">
+      <Project>{32563036-C03F-4CCF-A410-1213664E46AA}</Project>
+      <Name>ServerInterfaceLib</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

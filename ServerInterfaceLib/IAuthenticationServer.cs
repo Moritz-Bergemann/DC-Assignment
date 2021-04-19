@@ -28,7 +28,12 @@ namespace ServerInterfaceLib
         [OperationContract]
         int Login(string name, string password);
 
+        /// <summary>
+        /// Validates if the input token integer has been validated against a user.
+        /// </summary>
+        /// <param name="token"></param> Integer that should have been validated against a user
+        /// <returns></returns> "validated" if token was validated, "not validated" if it was not
         [OperationContract]
-        string Validate(int token);            
+        string Validate(int token);
     }
 }
