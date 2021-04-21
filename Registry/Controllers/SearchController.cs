@@ -34,7 +34,7 @@ namespace Registry.Controllers
         }
 
         [Route("api/all")]
-        [HttpGet]
+        [HttpPost]
         public SearchResponse AllServices(SecureRequest request)
         {
             try
