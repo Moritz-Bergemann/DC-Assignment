@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Controls;
 using APIClasses.Math;
 using APIClasses.Registry;
+using APIClasses.Security;
 using Newtonsoft.Json;
 
 namespace ClientGUI
@@ -56,7 +57,6 @@ namespace ClientGUI
         private void Login(string username, string password)
         {
             //TODO async display loading
-
 
             int token;
             try
@@ -157,8 +157,8 @@ namespace ClientGUI
                 MessageBox.Show($"This service cannot be tested as the given number of operands '{serviceData.NumOperands}' is invalid.", "Cannot test", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            Uri uriResult;
-            bool validUrl = Uri.TryCreate(serviceData.ApiEndpoint, UriKind.Absolute, out uriResult);
+
+            bool validUrl = Uri.TryCreate(serviceData.ApiEndpoint, UriKind.Absolute, out Uri _);
             if (!validUrl)
             {
                 MessageBox.Show($"This service cannot be tested as the given API endpoint '{serviceData.ApiEndpoint}' is invalid.", "Cannot test", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -197,6 +197,8 @@ namespace ClientGUI
 
             //Construct MathInput for service
             MathInput input = new MathInput();
+
+            //TODO authentication
 
             foreach (UIElement element in ServiceInputsItemsControl.Items)
             {
@@ -251,9 +253,16 @@ namespace ClientGUI
         {
             string query = SearchBox.Text;
 
+            //Verify authentication data
+            if (_loginToken == -1)
+            {
+                MessageBox.Show("Please log in before attempting to make a request to the server.", "Please login", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             //Make request for registry search result
             RestRequest request = new RestRequest("api/search");
-            SearchData searchData = new SearchData(query);
+            SearchData searchData = new SearchData(_loginToken, query);
             request.AddJsonBody(searchData);
             IRestResponse response = _registryClient.Post(request);
 
@@ -263,16 +272,31 @@ namespace ClientGUI
                 return;
             }
 
-            List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+            SearchResponse result = JsonConvert.DeserializeObject<SearchResponse>(response.Content);
+
+            //Abort if service did not return successfully
+            if (result.Status.Equals("Denied"))
+            {
+                MessageBox.Show($"The server request was rejected. Reason: {result.Reason}", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             //Fill services list with retrieved list
-            FillServicesList(result);
+            FillServicesList(result.Values);
         }
 
         private void Show_All_Services_Button_Click(object sender, RoutedEventArgs e)
         {
+            //Verify authentication data
+            if (_loginToken == -1)
+            {
+                MessageBox.Show("Please log in before attempting to make a request to the server.", "Please login", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             //Make request for registry search result
             RestRequest request = new RestRequest("api/all");
+            request.AddJsonBody(new SecureRequest(_loginToken));
             IRestResponse response = _registryClient.Get(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -281,10 +305,17 @@ namespace ClientGUI
                 return;
             }
 
-            List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+            SearchResponse result = JsonConvert.DeserializeObject<SearchResponse>(response.Content);
+
+            //Abort if service did not return successfully
+            if (result.Status.Equals("Denied"))
+            {
+                MessageBox.Show($"The server request was rejected. Reason: {result.Reason}", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             //Fill services list with retrieved list
-            FillServicesList(result);
+            FillServicesList(result.Values);
         }
     }
 }

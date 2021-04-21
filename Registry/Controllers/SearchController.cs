@@ -3,7 +3,8 @@ using Registry.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
- 
+using APIClasses.Security;
+
 namespace Registry.Controllers
 {
     public class SearchController : ApiController
@@ -23,10 +24,10 @@ namespace Registry.Controllers
                 }
                 else
                 {
-                    return new SearchResponse(false, "Authentication Error", null);
+                    throw new AuthenticationException("Authentication denied");
                 }
             }
-            catch
+            catch (AuthenticationException)
             {
                 return new SearchResponse(false, "Connection to authentication server failed", null);
             }
@@ -34,11 +35,27 @@ namespace Registry.Controllers
 
         [Route("api/all")]
         [HttpGet]
-        public SearchResponse AllServices()
+        public SearchResponse AllServices(SecureRequest request)
         {
-            List<RegistryData> searchResult = RegistryModel.Instance.All();
+            try
+            {
+                if (RegistryModel.Instance.TestAuthentication(request.Token))
+                {
+                    List<RegistryData> searchResult = RegistryModel.Instance.All();
 
-            return new SearchResponse(true, null, searchResult);
+                    return new SearchResponse(true, null, searchResult);
+                }
+                else
+                {
+                    throw new AuthenticationException("Authentication denied");
+                }
+
+            }
+            catch (AuthenticationException)
+            {
+                return new SearchResponse(false, "Connection to authentication server failed", null);
+            }
+
         }
     }
 }

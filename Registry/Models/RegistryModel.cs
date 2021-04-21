@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Web;
 using APIClasses.Registry;
+using APIClasses.Security;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -140,7 +141,7 @@ namespace Registry.Models
             }
             else
             {
-                throw new RegistryException("Could not connect to authentication server");
+                throw new AuthenticationException("Could not connect to authentication server");
             }
 
             return result;
