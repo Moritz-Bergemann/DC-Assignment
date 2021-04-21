@@ -142,9 +142,9 @@ namespace ServicePublishingConsole
                     Console.WriteLine($"Registration failed. ({response})");
                 }
             }
-            catch (EndpointNotFoundException e)
+            catch (CommunicationException c)
             {
-                Console.WriteLine($"Failed to connect to authentication server - {e.Message}");
+                Console.WriteLine($"Failed to connect to authentication server - {c.Message}");
             }
 
         }
@@ -173,9 +173,9 @@ namespace ServicePublishingConsole
                     Console.WriteLine("Login failed. Authentication token has not been changed.");
                 }
             }
-            catch (EndpointNotFoundException e)
+            catch (CommunicationException c)
             {
-                Console.WriteLine($"Failed to connect to authentication server - {e.Message}");
+                Console.WriteLine($"Failed to connect to authentication server - {c.Message}");
             }
         }
 

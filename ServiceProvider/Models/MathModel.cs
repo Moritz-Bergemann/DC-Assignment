@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.UI;
+using ServerInterfaceLib;
 
 namespace ServiceProvider.Models
 {
     public class MathModel
     {
+        private static string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
+        private IAuthenticationServer _authServer;
+
+        public static MathModel Instance
+        {
+            get;
+        } = new MathModel();
+
+        public MathModel()
+        {
+            //Create connection factory for connection to auth server
+            NetTcpBinding tcp = new NetTcpBinding();
+            ChannelFactory<IAuthenticationServer> serverChannelFactory = new ChannelFactory<IAuthenticationServer>(tcp, authUrl);
+            _authServer = serverChannelFactory.CreateChannel();
+        }
+
         /// <summary>
         /// Generates a list of all prime numbers from 2 up to the given upper bound (inclusive).
         /// </summary>
@@ -100,6 +118,28 @@ namespace ServiceProvider.Models
             }
 
             return !divisible;
+        }
+
+        /// <summary>
+        /// Returns true if token could be successfully authenticated with authentication server, and false otherwise (including in case of server error).
+        /// </summary>
+        /// <param name="token">Authentication token to test against</param>
+        /// <returns></returns>
+        public bool CheckAuthentication(int token)
+        {
+            bool result;
+            try
+            {
+                string validationResult = _authServer.Validate(token);
+
+                result = validationResult.Equals("validated");
+            }
+            catch (CommunicationException)
+            {
+                result = false;
+            }
+
+            return result;
         }
     }
 }

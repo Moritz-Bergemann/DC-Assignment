@@ -64,13 +64,19 @@ namespace ClientGUI
                 //Attempt login
                 token = _authServer.Login(username, password);
             }
-            catch (EndpointNotFoundException)
+            catch (CommunicationException)
             {
                 MessageBox.Show("The client failed to establish a connection with the authentication service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             _loginToken = token;
+
+            //Show result in display box
+            string registerResultText =
+                token != -1 ? "Login Successful!" : "Login failed.";
+            MessageBox.Show(registerResultText, "Login result", MessageBoxButton.OK);
+
 
             //Show result in login status
             LoginStatus.Text = token != -1 ? "Logged in." : "Not currently logged in.";
@@ -86,13 +92,13 @@ namespace ClientGUI
             {
                 result = _authServer.Register(username, password);
             }
-            catch (EndpointNotFoundException)
+            catch (CommunicationException)
             {
                 MessageBox.Show("The client failed to establish a connection with the authentication service.", "Request failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            //Show result in login status
+            //Show result in display box
             string registerResultText =
                 result.Equals("successfully registered") ? "Register Successful!" : "Register failed.";
             MessageBox.Show(registerResultText, "Registration result", MessageBoxButton.OK);
@@ -123,7 +129,6 @@ namespace ClientGUI
                 Content = loginControl,
                 SizeToContent = SizeToContent.WidthAndHeight
             };
-
             loginWindow.Show();
         }
 
@@ -195,10 +200,8 @@ namespace ClientGUI
                 return;
             }
 
-            //Construct MathInput for service
-            MathInput input = new MathInput();
-
-            //TODO authentication
+            //Construct IntegerMathRequest for service
+            IntegerMathRequest input = new IntegerMathRequest(_loginToken, new List<int>());
 
             foreach (UIElement element in ServiceInputsItemsControl.Items)
             {
@@ -242,10 +245,18 @@ namespace ClientGUI
             }
 
             //Display result at bottom
-            MathResult result = JsonConvert.DeserializeObject<MathResult>(response.Content);
+            MathResponse result = JsonConvert.DeserializeObject<MathResponse>(response.Content);
 
-            //Display result if successful and error message otherwise
-            ServiceResult.Text = result.Success ? result.Result : result.Message;
+            //Check if authentication succeeded
+            if (result.Status.Equals("Accepted"))
+            {
+                //Display result if successful and error message otherwise
+                ServiceResult.Text = result.Success ? result.Result : result.Message;
+            }
+            else
+            {
+                ServiceResult.Text = $"Authentication denied - {result.Reason}";
+            }
         }
 
 
@@ -272,7 +283,7 @@ namespace ClientGUI
                 return;
             }
 
-            SearchResponse result = JsonConvert.DeserializeObject<SearchResponse>(response.Content);
+            SearchResult result = JsonConvert.DeserializeObject<SearchResult>(response.Content);
 
             //Abort if service did not return successfully
             if (result.Status.Equals("Denied"))
@@ -305,7 +316,7 @@ namespace ClientGUI
                 return;
             }
 
-            SearchResponse result = JsonConvert.DeserializeObject<SearchResponse>(response.Content);
+            SearchResult result = JsonConvert.DeserializeObject<SearchResult>(response.Content);
 
             //Abort if service did not return successfully
             if (result.Status.Equals("Denied"))

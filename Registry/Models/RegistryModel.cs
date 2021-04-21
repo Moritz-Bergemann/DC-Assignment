@@ -139,7 +139,7 @@ namespace Registry.Models
             {
                 result = false;
             }
-            else
+            else //TODO don't think this works, need to catch EndpointNotFoundException
             {
                 throw new AuthenticationException("Could not connect to authentication server");
             }

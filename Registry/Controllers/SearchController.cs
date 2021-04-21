@@ -11,7 +11,7 @@ namespace Registry.Controllers
     {
         [Route("api/search/")]
         [HttpPost]
-        public SearchResponse Search(SearchRequest request)
+        public SearchResult Search(SearchRequest request)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace Registry.Controllers
                 {
                     List<ServiceData> searchResult = RegistryModel.Instance.Search(request.Query);
 
-                    return new SearchResponse(true, null, searchResult);
+                    return new SearchResult(true, null, searchResult);
                 }
                 else
                 {
@@ -29,13 +29,13 @@ namespace Registry.Controllers
             }
             catch (AuthenticationException)
             {
-                return new SearchResponse(false, "Authentication Error", null);
+                return new SearchResult(false, "Authentication Error", null);
             }
         }
 
         [Route("api/all")]
         [HttpPost]
-        public SearchResponse AllServices(SecureRequest request)
+        public SearchResult AllServices(SecureRequest request)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Registry.Controllers
                 {
                     List<ServiceData> searchResult = RegistryModel.Instance.All();
 
-                    return new SearchResponse(true, null, searchResult);
+                    return new SearchResult(true, null, searchResult);
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace Registry.Controllers
             }
             catch (AuthenticationException)
             {
-                return new SearchResponse(false, "Authentication Error", null);
+                return new SearchResult(false, "Authentication Error", null);
             }
 
         }

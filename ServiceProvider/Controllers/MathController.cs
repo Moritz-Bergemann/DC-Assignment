@@ -9,86 +9,137 @@ namespace ServiceProvider.Controllers
     {
         [Route("api/add2")]
         [HttpPost]
-        public MathResult AddTwoNumbers(MathInput input)
+        public MathResponse AddTwoNumbers(IntegerMathRequest input)
         {
-            if (input.Values.Count != 2)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
+                if (input.Values.Count != 2)
+                    return new MathResponse(null, false, "bad number of parameters");
 
-            return new MathResult(input.Values[0] + input.Values[1]); 
+                return new MathResponse(input.Values[0] + input.Values[1]);
+            }
+            else
+            {
+                return new MathResponse(false, "Authentication Error");
+            }
         }
 
         [Route("api/add3")]
         [HttpPost]
-        public MathResult AddThreeNumbers(MathInput input)
+        public MathResponse AddThreeNumbers(IntegerMathRequest input)
         {
-            if (input.Values.Count != 3)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
 
-            return new MathResult(input.Values[0] + input.Values[1] + input.Values[2]);
+                if (input.Values.Count != 3)
+                    return new MathResponse(null, false, "bad number of parameters");
+
+                return new MathResponse(input.Values[0] + input.Values[1] + input.Values[2]);
+            }
+            else
+            {
+                return new MathResponse(false, "Authentication Error");
+            }
         }
 
         [Route("api/multiply2")]
         [HttpPost]
-        public MathResult MultiplyTwoNumbers(MathInput input)
+        public MathResponse MultiplyTwoNumbers(IntegerMathRequest input)
         {
-            if (input.Values.Count != 2)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
+                if (input.Values.Count != 2)
+                    return new MathResponse(null, false, "bad number of parameters");
 
-            return new MathResult(input.Values[0] * input.Values[1]);
+                return new MathResponse(input.Values[0] * input.Values[1]);
+            }
+            else
+            {
+                return new MathResponse(false, "Authentication Error");
+            }
         }
 
         [Route("api/multiply3")]
         [HttpPost]
-        public MathResult MultiplyThreeNumbers(MathInput input)
+        public MathResponse MultiplyThreeNumbers(IntegerMathRequest input)
         {
-            if (input.Values.Count != 3)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
+                if (input.Values.Count != 3)
+                    return new MathResponse(null, false, "bad number of parameters");
 
-            return new MathResult(input.Values[0] * input.Values[1] * input.Values[2]);
+                return new MathResponse(input.Values[0] * input.Values[1] * input.Values[2]);
+            }
+            else
+            {
+                return new MathResponse(false, "Authentication Error");
+            }
         }
 
         [Route("api/prime-to")]
         [HttpPost]
-        public MathResult GetPrimesTo(MathInput input)
+        public MathResponse GetPrimesTo(IntegerMathRequest input)
         {
-            if (input.Values.Count != 1)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
+                if (input.Values.Count != 1)
+                    return new MathResponse(null, false, "bad number of parameters");
 
-            try
-            {
-                return new MathResult(MathModel.GeneratePrimesUpTo(input.Values[0]));
+                try
+                {
+                    return new MathResponse(MathModel.GeneratePrimesUpTo(input.Values[0]));
+                }
+                catch (ArgumentException a)
+                {
+                    return new MathResponse(null, false, "calculation error: " + a.Message);
+                }
             }
-            catch (ArgumentException a)
+            else
             {
-                return new MathResult(null, false, "calculation error: " + a.Message);
+                return new MathResponse(false, "Authentication Error");
             }
         }
 
         [Route("api/prime-range")]
         [HttpPost]
-        public MathResult GetPrimesInRange(MathInput input)
+        public MathResponse GetPrimesInRange(IntegerMathRequest input)
         {
-            if (input.Values.Count != 1)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
 
-            try
-            {
-                return new MathResult(MathModel.GeneratePrimesBetween(input.Values[0], input.Values[1]));
+                if (input.Values.Count != 1)
+                    return new MathResponse(null, false, "bad number of parameters");
+
+                try
+                {
+                    return new MathResponse(MathModel.GeneratePrimesBetween(input.Values[0], input.Values[1]));
+                }
+                catch (ArgumentException a)
+                {
+                    return new MathResponse(null, false, "calculation error: " + a.Message);
+                }
             }
-            catch (ArgumentException a)
+            else
             {
-                return new MathResult(null, false, "calculation error: " + a.Message);
+                return new MathResponse(false, "Authentication Error");
             }
         }
 
         [Route("api/is-prime")]
         [HttpPost]
-        public MathResult IsPrimeNumber(MathInput input)
+        public MathResponse IsPrimeNumber(IntegerMathRequest input)
         {
-            if (input.Values.Count != 1)
-                return new MathResult(null, false, "bad number of parameters");
+            if (MathModel.Instance.CheckAuthentication(input.Token))
+            {
+                if (input.Values.Count != 1)
+                    return new MathResponse(null, false, "bad number of parameters");
 
-            return new MathResult(MathModel.IsPrime(input.Values[0]));
+                return new MathResponse(MathModel.IsPrime(input.Values[0]).ToString());
+            }
+            else
+            {
+                return new MathResponse(false, "Authentication Error");
+            }
         }
     }
 }
