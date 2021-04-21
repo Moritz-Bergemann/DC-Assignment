@@ -328,5 +328,10 @@ namespace ClientGUI
             //Fill services list with retrieved list
             FillServicesList(result.Values);
         }
+
+        private void Test_Bad_Token(object sender, RoutedEventArgs e) //TODO remove me
+        {
+            _loginToken = 12345;
+        }
     }
 }

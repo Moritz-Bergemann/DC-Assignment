@@ -4,7 +4,6 @@ using APIClasses.Security;
 
 namespace APIClasses.Math
 {
-    //TODO - move all of these out into separate classes
     public class MathResponse : SecureResponse
     {
         public string Result;

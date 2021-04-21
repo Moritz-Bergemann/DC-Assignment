@@ -68,12 +68,6 @@ namespace Registry.Models
         public void Publish(ServiceData newData)
         {
             List<ServiceData> registry = OpenRegistry();
-
-            //TODO check formats for everything are appropriate
-            if (!Formats.AllowedOperandTypes.Any(s => s.Equals(newData.OperandType)))
-            {
-
-            }            
             
             //Check service with this or name endpoint does not already exist in the database
             if (registry.Any(data => data.ApiEndpoint.Equals(newData.ApiEndpoint)))
@@ -132,17 +126,16 @@ namespace Registry.Models
 
             bool result;
 
-            if (validationResult.Equals("validated"))
+            try
             {
-                result = true;
-            } else if (validationResult.Equals("not validated"))
-            {
-                result = false;
+                result = validationResult.Equals("validated");
             }
-            else //TODO don't think this works, need to catch EndpointNotFoundException
+            catch (CommunicationException)
             {
                 throw new AuthenticationException("Could not connect to authentication server");
+
             }
+
 
             return result;
         }

@@ -58,7 +58,6 @@ namespace Authenticator
 
             //Write new user to storage
             string formattedUserData = $"{name}|{password}";
-            //TODO what if the fileIO messes up
 
             try
             {
