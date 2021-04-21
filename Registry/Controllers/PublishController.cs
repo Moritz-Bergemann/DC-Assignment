@@ -14,7 +14,7 @@ namespace Registry.Controllers
     {
         [Route("api/publish")]
         [HttpPost]
-        public PublishResult Publish(RegistryData data)
+        public PublishResult Publish(ServiceData data)
         {
             PublishResult result = new PublishResult();
 

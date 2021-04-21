@@ -127,7 +127,7 @@ namespace ClientGUI
             loginWindow.Show();
         }
 
-        private void FillServicesList(List<RegistryData> services)
+        private void FillServicesList(List<ServiceData> services)
         {
             //Add all found services to list of services in form of ServiceSummaryUserControl
             List<UIElement> controlsList = new List<UIElement>();
@@ -144,7 +144,7 @@ namespace ClientGUI
             ServicesItemsControl.ItemsSource = controlsList;
         }
 
-        private void PrepareServiceTest(RegistryData serviceData)
+        private void PrepareServiceTest(ServiceData serviceData)
         {
             //Check service data is valid for testing
             if (!Formats.AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 

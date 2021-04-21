@@ -8,7 +8,7 @@ using APIClasses.Security;
 
 namespace APIClasses.Registry
 {
-    public class RegistryData
+    public class ServiceData
     {
         public string Name;
         public string Description;
@@ -34,12 +34,12 @@ namespace APIClasses.Registry
 
     public class SearchResponse : SecureResponse
     {
-        public List<RegistryData> Values;
+        public List<ServiceData> Values;
 
         public SearchResponse() : base()
         { }
 
-        public SearchResponse(bool accepted, string acceptReason, List<RegistryData> values) : base(accepted, acceptReason)
+        public SearchResponse(bool accepted, string acceptReason, List<ServiceData> values) : base(accepted, acceptReason)
         {
             Values = values;
         }

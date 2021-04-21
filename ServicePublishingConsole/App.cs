@@ -152,7 +152,7 @@ namespace ServicePublishingConsole
             try
             {
                 //Prepare registry data
-                RegistryData data = new RegistryData();
+                ServiceData data = new ServiceData();
 
                 Console.Write("Service name: ");
                 data.Name = Console.ReadLine();
@@ -206,7 +206,7 @@ namespace ServicePublishingConsole
                 RestRequest request = new RestRequest("api/unpublish");
                 request.AddJsonBody(data);
                 IRestResponse response = _registryClient.Post(request);
-                List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+                List<ServiceData> result = JsonConvert.DeserializeObject<List<ServiceData>>(response.Content);
 
             }
             catch (NullReferenceException)

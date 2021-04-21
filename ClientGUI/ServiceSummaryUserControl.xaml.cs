@@ -21,10 +21,10 @@ namespace ClientGUI
     /// </summary>
     public partial class ServiceSummaryUserControl : UserControl
     {
-        private readonly Action<RegistryData> _testAction;
-        private readonly RegistryData _serviceData;
+        private readonly Action<ServiceData> _testAction;
+        private readonly ServiceData _serviceData;
 
-        public ServiceSummaryUserControl(Action<RegistryData> testAction, RegistryData serviceData)
+        public ServiceSummaryUserControl(Action<ServiceData> testAction, ServiceData serviceData)
         {
             _testAction = testAction;
             _serviceData = serviceData;

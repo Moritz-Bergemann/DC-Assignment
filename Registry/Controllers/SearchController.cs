@@ -18,7 +18,7 @@ namespace Registry.Controllers
             {
                 if (RegistryModel.Instance.TestAuthentication(data.Token))
                 {
-                    List<RegistryData> searchResult = RegistryModel.Instance.Search(data.Query);
+                    List<ServiceData> searchResult = RegistryModel.Instance.Search(data.Query);
 
                     return new SearchResponse(true, null, searchResult);
                 }
@@ -41,7 +41,7 @@ namespace Registry.Controllers
             {
                 if (RegistryModel.Instance.TestAuthentication(request.Token))
                 {
-                    List<RegistryData> searchResult = RegistryModel.Instance.All();
+                    List<ServiceData> searchResult = RegistryModel.Instance.All();
 
                     return new SearchResponse(true, null, searchResult);
                 }
