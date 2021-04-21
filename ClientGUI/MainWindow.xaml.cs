@@ -297,7 +297,7 @@ namespace ClientGUI
             //Make request for registry search result
             RestRequest request = new RestRequest("api/all");
             request.AddJsonBody(new SecureRequest(_loginToken));
-            IRestResponse response = _registryClient.Get(request);
+            IRestResponse response = _registryClient.Post(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
