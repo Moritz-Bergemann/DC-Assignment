@@ -17,16 +17,31 @@ namespace APIClasses.Registry
         public string OperandType;
     }
 
-    public class EndpointData
+    public class PublishRequest : SecureRequest
     {
-        public string ApiEndpoint;
+        public ServiceData Data;
+
+        public PublishRequest(int token, ServiceData data) : base(token)
+        {
+            Data = data;
+        }
     }
 
-    public class SearchData : SecureRequest
+    public class UnpublishRequest : SecureRequest
+    {
+        public string ApiEndpoint;
+
+        public UnpublishRequest(int token, string apiEndpoint) : base(token)
+        {
+            ApiEndpoint = apiEndpoint;
+        }
+    }
+
+    public class SearchRequest : SecureRequest
     {
         public string Query;
 
-        public SearchData(int token, string query) : base(token)
+        public SearchRequest(int token, string query) : base(token)
         {
             Query = query;
         }

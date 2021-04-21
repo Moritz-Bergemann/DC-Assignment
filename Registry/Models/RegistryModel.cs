@@ -94,9 +94,9 @@ namespace Registry.Models
         /// <summary>
         /// Remove an item with the given API endpoint from the registry if it exists.
         /// </summary>
-        /// <param name="endpointData"></param> API endpoint of element to remove
+        /// <param name="unpublishRequest"></param> API endpoint of element to remove
         /// <returns></returns> Whether the element was found & removed
-        public bool Unpublish(EndpointData endpointData)
+        public bool Unpublish(UnpublishRequest unpublishRequest)
         {
             List<ServiceData> registry = OpenRegistry();
 
@@ -105,7 +105,7 @@ namespace Registry.Models
             int ii = 0;
             foreach (ServiceData data in registry)
             {
-                if (data.ApiEndpoint.Equals(endpointData.ApiEndpoint))
+                if (data.ApiEndpoint.Equals(unpublishRequest.ApiEndpoint))
                 {
                     registry.RemoveAt(ii);
                     found = true;
