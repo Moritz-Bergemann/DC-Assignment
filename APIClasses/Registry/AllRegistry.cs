@@ -46,47 +46,34 @@ namespace APIClasses.Registry
         {
             Query = query;
             Token = token;
-
         }
     }
 
-    public class SearchResponse
+    public class SearchResult : SecureResponse
     {
         public List<ServiceData> Values;
 
-        public string Status;
-        public string Reason;
-
-        public SearchResponse()
+        public SearchResult() : base()
         { }
 
-        public SearchResponse(bool accepted, string acceptReason, List<ServiceData> values) : base(accepted, acceptReason)
+        public SearchResult(bool accepted, string acceptReason, List<ServiceData> values) : base(accepted, acceptReason)
 
         {
             Values = values;
-            Status = accepted ? "Accepted" : "Denied";
-            Reason = acceptReason;
         }
     }
 
-    public class PublishResult
+    public class PublishResult: SecureResponse
     {
         public bool Success;
         public string Message;
 
-        public string Status;
-        public string Reason;
-
-        public PublishResult()
+        public PublishResult() : base()
         { }
-        public PublishResult(bool accepted, string reason, bool success, string message)
+        public PublishResult(bool accepted, string reason, bool success, string message) : base(accepted, reason)
         {
             Success = success;
             Message = message;
-
-            Status = accepted ? "Accepted" : "Denied";
-            Reason = reason;
-
         }
     }
 }
