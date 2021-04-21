@@ -45,12 +45,12 @@ namespace Registry.Models
             using (File.AppendText(dataPath)) ;
         }
 
-        public List<RegistryData> Search(string query)
+        public List<ServiceData> Search(string query)
         {
             //Get JSON data
             JsonSerializer serializer = new JsonSerializer();
 
-            List<RegistryData> registry = OpenRegistry();
+            List<ServiceData> registry = OpenRegistry();
 
             //Query for elements containing search query
             return registry.Where(data => data.Description.Contains(query)).ToList();
@@ -60,14 +60,14 @@ namespace Registry.Models
         /// Retrieves a list of all registry services
         /// </summary>
         /// <returns></returns> list of all registry 
-        public List<RegistryData> All()
+        public List<ServiceData> All()
         {
             return OpenRegistry();
         }
 
-        public void Publish(RegistryData newData)
+        public void Publish(ServiceData newData)
         {
-            List<RegistryData> registry = OpenRegistry();
+            List<ServiceData> registry = OpenRegistry();
 
             //TODO check formats for everything are appropriate
             if (!Formats.AllowedOperandTypes.Any(s => s.Equals(newData.OperandType)))
@@ -94,18 +94,18 @@ namespace Registry.Models
         /// <summary>
         /// Remove an item with the given API endpoint from the registry if it exists.
         /// </summary>
-        /// <param name="endpointData"></param> API endpoint of element to remove
+        /// <param name="unpublishRequest"></param> API endpoint of element to remove
         /// <returns></returns> Whether the element was found & removed
-        public bool Unpublish(EndpointData endpointData)
+        public bool Unpublish(UnpublishRequest unpublishRequest)
         {
-            List<RegistryData> registry = OpenRegistry();
+            List<ServiceData> registry = OpenRegistry();
 
             //Remove element from registry if it exists
             bool found = false;
             int ii = 0;
-            foreach (RegistryData data in registry)
+            foreach (ServiceData data in registry)
             {
-                if (data.ApiEndpoint.Equals(endpointData.ApiEndpoint))
+                if (data.ApiEndpoint.Equals(unpublishRequest.ApiEndpoint))
                 {
                     registry.RemoveAt(ii);
                     found = true;
@@ -148,13 +148,13 @@ namespace Registry.Models
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private List<RegistryData> OpenRegistry()
+        private List<ServiceData> OpenRegistry()
         {
-            List<RegistryData> registry;
+            List<ServiceData> registry;
 
             try
             {
-                registry = JsonConvert.DeserializeObject<List<RegistryData>>(File.ReadAllText(_dataPath)); //TODO validation here
+                registry = JsonConvert.DeserializeObject<List<ServiceData>>(File.ReadAllText(_dataPath)); //TODO validation here
             }
             catch (Exception e)
             {
@@ -165,7 +165,7 @@ namespace Registry.Models
                     using (File.Create(_dataPath)) ;
 
                     //Make registry empty list (since has been reset)
-                    registry = new List<RegistryData>();
+                    registry = new List<ServiceData>();
                 }
                 else
                 {
@@ -175,14 +175,14 @@ namespace Registry.Models
 
             if (registry == null)
             {
-                registry = new List<RegistryData>();
+                registry = new List<ServiceData>();
             }
 
             return registry;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void SaveRegistry(List<RegistryData> registry)
+        private void SaveRegistry(List<ServiceData> registry)
         {
             //Convert registry to JSON
             string registryJson = JsonConvert.SerializeObject(registry);

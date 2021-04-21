@@ -11,14 +11,14 @@ namespace Registry.Controllers
     {
         [Route("api/search/")]
         [HttpPost]
-        public SearchResponse Search(SearchData data)
+        public SearchResponse Search(SearchRequest request)
         {
-            //Check the token on the registry server
             try
             {
-                if (RegistryModel.Instance.TestAuthentication(data.Token))
+                //Check the token on the registry server
+                if (RegistryModel.Instance.TestAuthentication(request.Token))
                 {
-                    List<RegistryData> searchResult = RegistryModel.Instance.Search(data.Query);
+                    List<ServiceData> searchResult = RegistryModel.Instance.Search(request.Query);
 
                     return new SearchResponse(true, null, searchResult);
                 }
@@ -29,7 +29,7 @@ namespace Registry.Controllers
             }
             catch (AuthenticationException)
             {
-                return new SearchResponse(false, "Connection to authentication server failed", null);
+                return new SearchResponse(false, "Authentication Error", null);
             }
         }
 
@@ -41,7 +41,7 @@ namespace Registry.Controllers
             {
                 if (RegistryModel.Instance.TestAuthentication(request.Token))
                 {
-                    List<RegistryData> searchResult = RegistryModel.Instance.All();
+                    List<ServiceData> searchResult = RegistryModel.Instance.All();
 
                     return new SearchResponse(true, null, searchResult);
                 }
@@ -53,7 +53,7 @@ namespace Registry.Controllers
             }
             catch (AuthenticationException)
             {
-                return new SearchResponse(false, "Connection to authentication server failed", null);
+                return new SearchResponse(false, "Authentication Error", null);
             }
 
         }

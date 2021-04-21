@@ -40,7 +40,7 @@ namespace ServicePublishingConsole
             try
             {
                 bool run = true;
-                
+
                 Console.WriteLine("Service publishing command line program.\n" +
                                   "Enter 'help' for command information.");
 
@@ -62,13 +62,30 @@ namespace ServicePublishingConsole
                                 Login();
                                 break;
                             case "publish":
-                                Publish();
+                                if (_token != -1)
+                                {
+                                    Publish();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please log in before attempting to access the registry.");
+                                }
                                 break;
                             case "unpublish":
-                                Unpublish();
+                                if (_token != -1)
+                                {
+                                    Unpublish();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please log in before attempting to access the registry.");
+                                }
                                 break;
                             case "exit":
                                 run = false;
+                                break;
+                            case "bad-token-test": //TODO REMOVE ME
+                                _token = 12345678;
                                 break;
                             default:
                                 Console.WriteLine($"Unknown option '{userInputElements[0]}' - enter 'help' for help");
@@ -111,17 +128,25 @@ namespace ServicePublishingConsole
 
             Console.WriteLine("Attempting registration...");
 
-            //Register at remote server
-            string response = _authServer.Register(username, password);
+            try
+            {
+                //Register at remote server
+                string response = _authServer.Register(username, password);
 
-            if (response.Equals("successfully registered")) //If successfully registered
-            {
-                Console.WriteLine("Registration successful!");
+                if (response.Equals("successfully registered")) //If successfully registered
+                {
+                    Console.WriteLine("Registration successful!");
+                }
+                else
+                {
+                    Console.WriteLine($"Registration failed. ({response})");
+                }
             }
-            else
+            catch (EndpointNotFoundException e)
             {
-                Console.WriteLine($"Registration failed. ({response})");
+                Console.WriteLine($"Failed to connect to authentication server - {e.Message}");
             }
+
         }
 
         private void Login()
@@ -133,17 +158,24 @@ namespace ServicePublishingConsole
 
             Console.WriteLine("Attempting logon...");
 
-            int token = _authServer.Login(username, password);
+            try
+            {
+                int token = _authServer.Login(username, password);
 
-            if (token != -1)
-            {
-                _token = token;
-                Console.WriteLine("Login successful. Authentication token changed.");
-                Console.WriteLine($"DEBUG: New token is '{_token}'");
+                if (token != -1)
+                {
+                    _token = token;
+                    Console.WriteLine("Login successful. Authentication token changed.");
+                    Console.WriteLine($"DEBUG: New token is '{_token}'");
+                }
+                else //If login failed
+                {
+                    Console.WriteLine("Login failed. Authentication token has not been changed.");
+                }
             }
-            else //If login failed
+            catch (EndpointNotFoundException e)
             {
-                Console.WriteLine("Login failed. Authentication token has not been changed.");
+                Console.WriteLine($"Failed to connect to authentication server - {e.Message}");
             }
         }
 
@@ -152,7 +184,7 @@ namespace ServicePublishingConsole
             try
             {
                 //Prepare registry data
-                RegistryData data = new RegistryData();
+                ServiceData data = new ServiceData();
 
                 Console.Write("Service name: ");
                 data.Name = Console.ReadLine();
@@ -167,18 +199,26 @@ namespace ServicePublishingConsole
 
                 //Attempt publish on server
                 RestRequest request = new RestRequest("api/publish");
-                request.AddJsonBody(data);
+                request.AddJsonBody(new PublishRequest(_token, data));
                 IRestResponse response = _registryClient.Post(request);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     PublishResult result = JsonConvert.DeserializeObject<PublishResult>(response.Content);
 
-                    Console.WriteLine($"Publish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
+                    if (result.Status.Equals("Accepted")) //First check if authentication succeeded
+                    {
+                        //Then check if publish itself succeeded
+                        Console.WriteLine($"Publish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Registry access denied - {result.Reason}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Publish failed - bad response");
+                    Console.WriteLine($"Publish failed - server responded with error");
                 }
 
             }
@@ -197,16 +237,32 @@ namespace ServicePublishingConsole
             try
             {
                 //Prepare registry data
-                EndpointData data = new EndpointData();
-
                 Console.Write("API endpoint to unpublish: ");
-                data.ApiEndpoint = Console.ReadLine();
-                
+                string apiEndpoint = Console.ReadLine();
+
                 //Attempt publish on server
                 RestRequest request = new RestRequest("api/unpublish");
-                request.AddJsonBody(data);
+                request.AddJsonBody(new UnpublishRequest(_token, apiEndpoint));
                 IRestResponse response = _registryClient.Post(request);
-                List<RegistryData> result = JsonConvert.DeserializeObject<List<RegistryData>>(response.Content);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    PublishResult result = JsonConvert.DeserializeObject<PublishResult>(response.Content);
+
+                    if (result.Status.Equals("Accepted")) //First check if authentication succeeded
+                    {
+                        //Then check if unpublish itself succeeded
+                        Console.WriteLine($"Unpublish {(result.Success ? "succeeded" : "failed")} - {result.Message}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Registry access denied - {result.Reason}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Publish failed - server responded with error");
+                }
 
             }
             catch (NullReferenceException)

@@ -8,7 +8,7 @@ using APIClasses.Security;
 
 namespace APIClasses.Registry
 {
-    public class RegistryData
+    public class ServiceData
     {
         public string Name;
         public string Description;
@@ -17,18 +17,32 @@ namespace APIClasses.Registry
         public string OperandType;
     }
 
-    public class EndpointData
+    public class PublishRequest : SecureRequest
     {
-        public string ApiEndpoint;
+        public ServiceData Data;
+
+        public PublishRequest(int token, ServiceData data) : base(token)
+        {
+            Data = data;
+        }
     }
 
-    public class SearchData
+    public class UnpublishRequest : SecureRequest
+    {
+        public string ApiEndpoint;
+
+        public UnpublishRequest(int token, string apiEndpoint) : base(token)
+        {
+            ApiEndpoint = apiEndpoint;
+        }
+    }
+
+    public class SearchRequest : SecureRequest
     {
         public string Query;
 
-        public int Token;
+        public SearchRequest(int token, string query) : base(token)
 
-        public SearchData(int token, string query)
         {
             Query = query;
             Token = token;
@@ -38,7 +52,7 @@ namespace APIClasses.Registry
 
     public class SearchResponse
     {
-        public List<RegistryData> Values;
+        public List<ServiceData> Values;
 
         public string Status;
         public string Reason;
@@ -46,7 +60,8 @@ namespace APIClasses.Registry
         public SearchResponse()
         { }
 
-        public SearchResponse(bool accepted, string acceptReason, List<RegistryData> values)
+        public SearchResponse(bool accepted, string acceptReason, List<ServiceData> values) : base(accepted, acceptReason)
+
         {
             Values = values;
             Status = accepted ? "Accepted" : "Denied";

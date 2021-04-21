@@ -127,7 +127,7 @@ namespace ClientGUI
             loginWindow.Show();
         }
 
-        private void FillServicesList(List<RegistryData> services)
+        private void FillServicesList(List<ServiceData> services)
         {
             //Add all found services to list of services in form of ServiceSummaryUserControl
             List<UIElement> controlsList = new List<UIElement>();
@@ -144,7 +144,7 @@ namespace ClientGUI
             ServicesItemsControl.ItemsSource = controlsList;
         }
 
-        private void PrepareServiceTest(RegistryData serviceData)
+        private void PrepareServiceTest(ServiceData serviceData)
         {
             //Check service data is valid for testing
             if (!Formats.AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
@@ -262,8 +262,8 @@ namespace ClientGUI
 
             //Make request for registry search result
             RestRequest request = new RestRequest("api/search");
-            SearchData searchData = new SearchData(_loginToken, query);
-            request.AddJsonBody(searchData);
+            SearchRequest searchRequest = new SearchRequest(_loginToken, query);
+            request.AddJsonBody(searchRequest);
             IRestResponse response = _registryClient.Post(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
