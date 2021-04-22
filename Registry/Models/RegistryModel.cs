@@ -1,18 +1,14 @@
-﻿using System;
+﻿using APIClasses.Registry;
+using APIClasses.Security;
+using Newtonsoft.Json;
+using ServerInterfaceLib;
+using ServiceProvider.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
-using System.Web;
-using APIClasses.Registry;
-using APIClasses.Security;
-using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ServerInterfaceLib;
-using ServiceProvider.Models;
 
 namespace Registry.Models
 {

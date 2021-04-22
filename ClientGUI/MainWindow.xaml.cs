@@ -5,6 +5,7 @@ using System.Net;
 using RestSharp;
 using ServerInterfaceLib;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Controls;
@@ -54,15 +55,14 @@ namespace ClientGUI
             _authServer = serverChannelFactory.CreateChannel();
         }
         
-        private void Login(string username, string password)
+        private async void Login(string username, string password)
         {
-            //TODO async display loading
-
             int token;
             try
             {
                 //Attempt login
-                token = _authServer.Login(username, password);
+                token = await Task.Run(() => _authServer.Login(username, password));
+                //TODO show loading bar
             }
             catch (CommunicationException)
             {
@@ -82,7 +82,7 @@ namespace ClientGUI
             LoginStatus.Text = token != -1 ? "Logged in." : "Not currently logged in.";
         }
 
-        private void Register(string username, string password)
+        private async void Register(string username, string password)
         {
             //TODO async display loading
 
@@ -90,7 +90,8 @@ namespace ClientGUI
             string result;
             try
             {
-                result = _authServer.Register(username, password);
+                result = await Task.Run(() => _authServer.Register(username, password));
+                //TODO show loading bar
             }
             catch (CommunicationException)
             {
@@ -191,7 +192,7 @@ namespace ClientGUI
             ServiceInputsItemsControl.ItemsSource = inputBoxes;
         }
 
-        private void Run_Service_Button_Click(object sender, RoutedEventArgs e)
+        private async void Run_Service_Button_Click(object sender, RoutedEventArgs e)
         {
             //Check an API to test has actually been selected
             if (_apiEndpoint == null)
@@ -236,7 +237,8 @@ namespace ClientGUI
             RestRequest request = new RestRequest(_apiEndpoint);
             request.AddJsonBody(input);
 
-            IRestResponse response = _serviceClient.Post(request);
+            IRestResponse response = await AsyncTools.AsyncPost(request, _serviceClient);
+            //TODO show loading bar
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -260,7 +262,7 @@ namespace ClientGUI
         }
 
 
-        private void Search_Service_Button_Click(object sender, RoutedEventArgs e)
+        private async void Search_Service_Button_Click(object sender, RoutedEventArgs e)
         {
             string query = SearchBox.Text;
 
@@ -275,7 +277,9 @@ namespace ClientGUI
             RestRequest request = new RestRequest("api/search");
             SearchRequest searchRequest = new SearchRequest(_loginToken, query);
             request.AddJsonBody(searchRequest);
-            IRestResponse response = _registryClient.Post(request);
+
+            IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
+            //TODO show loading bar
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -296,7 +300,7 @@ namespace ClientGUI
             FillServicesList(result.Values);
         }
 
-        private void Show_All_Services_Button_Click(object sender, RoutedEventArgs e)
+        private async void Show_All_Services_Button_Click(object sender, RoutedEventArgs e)
         {
             //Verify authentication data
             if (_loginToken == -1)
@@ -308,7 +312,8 @@ namespace ClientGUI
             //Make request for registry search result
             RestRequest request = new RestRequest("api/all");
             request.AddJsonBody(new SecureRequest(_loginToken));
-            IRestResponse response = _registryClient.Post(request);
+            IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
+            //TODO show loading bar
 
             if (response.StatusCode != HttpStatusCode.OK)
             {

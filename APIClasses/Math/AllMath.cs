@@ -22,21 +22,21 @@ namespace APIClasses.Math
             Message = "success";
         }
 
-        public MathResponse(List<int> result)
+        public MathResponse(List<int> result) : base(true, null)
         {
             Result = string.Join(", ", result);
             Success = true;
             Message = "success";
         }
 
-        public MathResponse(string result)
+        public MathResponse(string result) : base(true, null)
         {
             Result = result;
             Success = true;
             Message = "success";
         }
 
-        public MathResponse(string result, bool success, string message)
+        public MathResponse(string result, bool success, string message) : base(true, null)
         {
             Result = result;
             Success = success;
