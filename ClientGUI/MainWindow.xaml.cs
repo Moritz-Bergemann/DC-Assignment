@@ -55,14 +55,13 @@ namespace ClientGUI
             _authServer = serverChannelFactory.CreateChannel();
         }
         
-        private async void Login(string username, string password)
+        private async Task Login(string username, string password)
         {
             int token;
             try
             {
                 //Attempt login
                 token = await Task.Run(() => _authServer.Login(username, password));
-                //TODO show loading bar
             }
             catch (CommunicationException)
             {
@@ -82,16 +81,13 @@ namespace ClientGUI
             LoginStatus.Text = token != -1 ? "Logged in." : "Not currently logged in.";
         }
 
-        private async void Register(string username, string password)
+        private async Task Register(string username, string password)
         {
-            //TODO async display loading
-
             //Attempt login
             string result;
             try
             {
                 result = await Task.Run(() => _authServer.Register(username, password));
-                //TODO show loading bar
             }
             catch (CommunicationException)
             {
@@ -237,8 +233,12 @@ namespace ClientGUI
             RestRequest request = new RestRequest(_apiEndpoint);
             request.AddJsonBody(input);
 
+            //Show loading bar
+            TestServiceProgressBar.Visibility = Visibility.Visible;
+            //Make async request
             IRestResponse response = await AsyncTools.AsyncPost(request, _serviceClient);
-            //TODO show loading bar
+            //Hide loading bar
+            TestServiceProgressBar.Visibility = Visibility.Collapsed;
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -261,7 +261,6 @@ namespace ClientGUI
             }
         }
 
-
         private async void Search_Service_Button_Click(object sender, RoutedEventArgs e)
         {
             string query = SearchBox.Text;
@@ -273,13 +272,17 @@ namespace ClientGUI
                 return;
             }
 
-            //Make request for registry search result
+            //Prepare request for registry search result
             RestRequest request = new RestRequest("api/search");
             SearchRequest searchRequest = new SearchRequest(_loginToken, query);
             request.AddJsonBody(searchRequest);
 
+            //Show loading bar
+            ShowServicesProgressBar.Visibility = Visibility.Visible;
+            //Make async request
             IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
-            //TODO show loading bar
+            //Hide loading bar again
+            ShowServicesProgressBar.Visibility = Visibility.Collapsed;
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -312,8 +315,13 @@ namespace ClientGUI
             //Make request for registry search result
             RestRequest request = new RestRequest("api/all");
             request.AddJsonBody(new SecureRequest(_loginToken));
+
+            //Show loading bar
+            ShowServicesProgressBar.Visibility = Visibility.Visible;
+            //Make async request
             IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
-            //TODO show loading bar
+            //Hide loading bar again
+            ShowServicesProgressBar.Visibility = Visibility.Collapsed;
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
