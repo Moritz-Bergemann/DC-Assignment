@@ -7,4 +7,4 @@ Distributed Computing assignment
 - [x] Make file paths local
 - [ ] final TODO removals
 - [ ] test ALL functions one time
-- [ ] Add some method comments
+- [x] Add some method comments

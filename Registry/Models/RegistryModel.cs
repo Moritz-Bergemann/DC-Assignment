@@ -144,7 +144,7 @@ namespace Registry.Models
 
             try
             {
-                registry = JsonConvert.DeserializeObject<List<ServiceData>>(File.ReadAllText(_dataPath)); //TODO validation here
+                registry = JsonConvert.DeserializeObject<List<ServiceData>>(File.ReadAllText(_dataPath));
             }
             catch (Exception e)
             {
