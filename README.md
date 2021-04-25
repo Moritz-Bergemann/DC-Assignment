@@ -5,6 +5,6 @@ Distributed Computing assignment
 - [x] Show loading bars
 - [ ] Make all server connections self-recover
 - [x] Make file paths local
-- [ ] final TODO removals
+- [x] final TODO removals
 - [ ] test ALL functions one time
 - [x] Add some method comments

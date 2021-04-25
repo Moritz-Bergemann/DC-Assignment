@@ -23,7 +23,6 @@ namespace ClientGUI
     {
         private IAuthenticationServer _authServer;
         private RestClient _registryClient;
-        private RestClient _serviceClient;
 
         //Authentication memory
         private int _loginToken;
@@ -45,9 +44,6 @@ namespace ClientGUI
             
             //Get the registry server
             _registryClient = new RestClient(registryUrl);
-
-            //Get the service provider server
-            _serviceClient = new RestClient(serviceUrl);
 
             //Create connection factory for connection to auth server
             NetTcpBinding tcp = new NetTcpBinding();
@@ -233,14 +229,19 @@ namespace ClientGUI
             if (input.Values.Count != _numOperands)
                 throw new ArgumentException("Number of service operands retrieved and required do not match");
 
-            //Make request to API endpoint
+            //Create request to API endpoint
             RestRequest request = new RestRequest(_apiEndpoint);
             request.AddJsonBody(input);
+
+            //Create REST client for the API endpoint
+            Uri uri = new Uri(_apiEndpoint);
+            string uriLeft = uri.GetLeftPart(UriPartial.Authority);
+            RestClient apiClient = new RestClient(uriLeft);
 
             //Show loading bar
             TestServiceProgressBar.Visibility = Visibility.Visible;
             //Make async request
-            IRestResponse response = await AsyncRest.AsyncPost(request, _serviceClient);
+            IRestResponse response = await AsyncRest.AsyncPost(request, apiClient);
             //Hide loading bar
             TestServiceProgressBar.Visibility = Visibility.Collapsed;
 
