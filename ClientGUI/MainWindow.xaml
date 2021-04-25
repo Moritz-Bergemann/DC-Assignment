@@ -34,7 +34,6 @@
         <TextBlock Name="ServiceDescription" HorizontalAlignment="Left" Margin="427,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="32" FontSize="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="603,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="27" Text="Operand Type:"/>
         <TextBlock Name="OperandType" HorizontalAlignment="Left" Margin="689,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="16"><Run/><LineBreak/><Run/></TextBlock>
-        <Button Content="TEST BAD TOKEN" HorizontalAlignment="Left" Margin="396,38,0,0" VerticalAlignment="Top" Width="75" Click="Test_Bad_Token"/>
         <ProgressBar Name="TestServiceProgressBar" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Left" Height="25" Margin="473,400,0,0" VerticalAlignment="Top" Width="211"/>
     </Grid>
 </Window>

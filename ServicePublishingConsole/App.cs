@@ -85,9 +85,6 @@ namespace ServicePublishingConsole
                             case "exit":
                                 run = false;
                                 break;
-                            //case "bad-token-test": //TODO REMOVE ME
-                            //    _token = 12345678;
-                            //    break;
                             default:
                                 Console.WriteLine($"Unknown option '{userInputElements[0]}' - enter 'help' for help");
                                 break;
