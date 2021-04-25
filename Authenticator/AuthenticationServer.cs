@@ -80,6 +80,12 @@ namespace Authenticator
             return "successfully registered";
         }
 
+        /// <summary>
+        /// Generates a login token on the authentication server that can be validated, if the given name and password have been registered.
+        /// </summary>
+        /// <param name="name"></param> Username for login
+        /// <param name="password"></param> Password for login
+        /// <returns></returns> Registration token (positive integer) if login successful, '-1' otherwise
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int Login(string name, string password)
         {
@@ -154,6 +160,10 @@ namespace Authenticator
             }
         }
 
+        /// <summary>
+        /// Creates a "token clearer" that will clear all session tokens at each given interval (in ms)
+        /// </summary>
+        /// <param name="interval">Interval at which to clear tokens, in ms</param>
         private void InitTokenClearer(int interval)
         {
             _tokenClearer = new Timer(ClearTokens, null, interval, interval);
@@ -222,7 +232,7 @@ namespace Authenticator
             //Create timer to wipe file at given interval
             server.InitTokenClearer(interval * 1000);
 
-            Console.WriteLine($"Wiping at interval of {interval} seconds.");
+            Console.WriteLine($"Wiping at interval of {interval} seconds, starting in {interval} seconds.");
 
             Console.ReadLine();
             host.Close();

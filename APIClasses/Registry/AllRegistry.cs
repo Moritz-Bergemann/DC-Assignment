@@ -8,15 +8,6 @@ using APIClasses.Security;
 
 namespace APIClasses.Registry
 {
-    public class ServiceData
-    {
-        public string Name;
-        public string Description;
-        public string ApiEndpoint;
-        public int NumOperands;
-        public string OperandType;
-    }
-
     public class PublishRequest : SecureRequest
     {
         public ServiceData Data;

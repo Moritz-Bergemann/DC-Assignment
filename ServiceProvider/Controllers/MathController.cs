@@ -7,6 +7,11 @@ namespace ServiceProvider.Controllers
 {
     public class MathController : ApiController
     {
+        /// <summary>
+        /// Adds 2 numbers together and returns the result
+        /// </summary>
+        /// <param name="input">Math input containing 2 numbers to add</param>
+        /// <returns>Sum of 3 numbers</returns>
         [Route("api/add2")]
         [HttpPost]
         public MathResponse AddTwoNumbers(IntegerMathRequest input)
@@ -24,6 +29,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds 3 numbers together and returns the result
+        /// </summary>
+        /// <param name="input">Math input containing 3 numbers to add</param>
+        /// <returns>Sum of 3 numbers</returns>
         [Route("api/add3")]
         [HttpPost]
         public MathResponse AddThreeNumbers(IntegerMathRequest input)
@@ -42,6 +52,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Multiplies 2 numbers together and returns the result
+        /// </summary>
+        /// <param name="input">Math input containing 2 numbers to multiply</param>
+        /// <returns>Product of 2 numbers</returns>
         [Route("api/multiply2")]
         [HttpPost]
         public MathResponse MultiplyTwoNumbers(IntegerMathRequest input)
@@ -59,6 +74,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Multiplies 3 numbers together and returns the result
+        /// </summary>
+        /// <param name="input">Math input containing 3 numbers to multiply</param>
+        /// <returns>Product of 3 numbers</returns>
         [Route("api/multiply3")]
         [HttpPost]
         public MathResponse MultiplyThreeNumbers(IntegerMathRequest input)
@@ -76,6 +96,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a list of prime numbers up to the given value (inclusive).
+        /// </summary>
+        /// <param name="input">Upper limit of list of prime numbers to return (inclusive)</param>
+        /// <returns>List of prime numbers</returns>
         [Route("api/prime-to")]
         [HttpPost]
         public MathResponse GetPrimesTo(IntegerMathRequest input)
@@ -100,6 +125,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a list of prime numbers between the two given values (inclusive).
+        /// </summary>
+        /// <param name="input">Lower and upper limit of list of prime numbers to return(inclusive)</param>
+        /// <returns>List of prime numbers</returns>
         [Route("api/prime-range")]
         [HttpPost]
         public MathResponse GetPrimesInRange(IntegerMathRequest input)
@@ -125,6 +155,11 @@ namespace ServiceProvider.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns the input number is prime
+        /// </summary>
+        /// <param name="input">Number to check prime status of</param>
+        /// <returns>Prime status of number</returns>
         [Route("api/is-prime")]
         [HttpPost]
         public MathResponse IsPrimeNumber(IntegerMathRequest input)

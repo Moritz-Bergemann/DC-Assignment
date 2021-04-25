@@ -9,6 +9,11 @@ namespace Registry.Controllers
 {
     public class SearchController : ApiController
     {
+        /// <summary>
+        /// Searches for a given service based on the description field of its registry entry, given authentication is valid.
+        /// </summary>
+        /// <param name="request">Search request</param>
+        /// <returns>List of RegistryData wrapped in SearchResult</returns>
         [Route("api/search/")]
         [HttpPost]
         public SearchResult Search(SearchRequest request)
@@ -33,6 +38,11 @@ namespace Registry.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns list of all services stored in registry, given authentication is valid.
+        /// </summary>
+        /// <param name="request">Base secure request containing authentication data</param>
+        /// <returns>List of RegistryData wrapped in SearchResult</returns>
         [Route("api/all")]
         [HttpPost]
         public SearchResult AllServices(SecureRequest request)

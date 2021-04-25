@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace APIClasses
 {
+    /// <summary>
+    /// Static class containing network paths to all services that make up the distributed application.
+    /// </summary>
     public class NetworkPaths
     {
         public static readonly string AuthenticatorUrl = "net.tcp://localhost:8101/AuthenticationProvider";

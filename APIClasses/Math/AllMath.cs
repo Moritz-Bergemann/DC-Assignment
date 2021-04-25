@@ -4,6 +4,9 @@ using APIClasses.Security;
 
 namespace APIClasses.Math
 {
+    /// <summary>
+    /// Struct class for storing response to math request. Result given in 'Result' field as a string.
+    /// </summary>
     public class MathResponse : SecureResponse
     {
         public string Result;
@@ -54,6 +57,10 @@ namespace APIClasses.Math
             Result = null;
         }
     }
+
+    /// <summary>
+    /// Struct class for integer-based math request.
+    /// </summary>
     public class IntegerMathRequest : SecureRequest
     {
         public List<int> Values = new List<int>();

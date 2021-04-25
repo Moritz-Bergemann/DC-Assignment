@@ -7,7 +7,10 @@ using RestSharp;
 
 namespace ClientGUI
 {
-    public class AsyncTools
+    /// <summary>
+    /// Static class containing functions to make library-compatible asynchronous REST requests.
+    /// </summary>
+    public class AsyncRest
     {
         public static async Task<IRestResponse> AsyncGet(RestRequest request, RestClient client)
         {

@@ -129,6 +129,10 @@ namespace ClientGUI
             loginWindow.Show();
         }
 
+        /// <summary>
+        /// Fill the services list with the given list of services
+        /// </summary>
+        /// <param name="services">List of services to use for filling</param>
         private void FillServicesList(List<ServiceData> services)
         {
             //Add all found services to list of services in form of ServiceSummaryUserControl
@@ -236,7 +240,7 @@ namespace ClientGUI
             //Show loading bar
             TestServiceProgressBar.Visibility = Visibility.Visible;
             //Make async request
-            IRestResponse response = await AsyncTools.AsyncPost(request, _serviceClient);
+            IRestResponse response = await AsyncRest.AsyncPost(request, _serviceClient);
             //Hide loading bar
             TestServiceProgressBar.Visibility = Visibility.Collapsed;
 
@@ -280,7 +284,7 @@ namespace ClientGUI
             //Show loading bar
             ShowServicesProgressBar.Visibility = Visibility.Visible;
             //Make async request
-            IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
+            IRestResponse response = await AsyncRest.AsyncPost(request, _registryClient);
             //Hide loading bar again
             ShowServicesProgressBar.Visibility = Visibility.Collapsed;
 
@@ -319,7 +323,7 @@ namespace ClientGUI
             //Show loading bar
             ShowServicesProgressBar.Visibility = Visibility.Visible;
             //Make async request
-            IRestResponse response = await AsyncTools.AsyncPost(request, _registryClient);
+            IRestResponse response = await AsyncRest.AsyncPost(request, _registryClient);
             //Hide loading bar again
             ShowServicesProgressBar.Visibility = Visibility.Collapsed;
 

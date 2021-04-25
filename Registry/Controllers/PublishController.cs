@@ -8,6 +8,11 @@ namespace Registry.Controllers
 {
     public class PublishController : ApiController
     {
+        /// <summary>
+        /// Publishes a given services to the registry, given service details and authentication are valid
+        /// </summary>
+        /// <param name="request">Publish request</param>
+        /// <returns></returns>
         [Route("api/publish")]
         [HttpPost]
         public PublishResult Publish(PublishRequest request)
@@ -53,6 +58,11 @@ namespace Registry.Controllers
             }
         }
 
+        /// <summary>
+        /// Removes a service from the registry if it exists and authentication is successful.
+        /// </summary>
+        /// <param name="request">Unpublish request</param>
+        /// <returns></returns>
         [Route("api/unpublish")]
         [HttpPost]
         public PublishResult Unpublish(UnpublishRequest request)

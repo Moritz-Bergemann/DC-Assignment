@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\AllRegistry.cs" />
     <Compile Include="Registry\Formats.cs" />
+    <Compile Include="Registry\ServiceData.cs" />
     <Compile Include="Security\AllSecurity.cs" />
     <Compile Include="Security\AuthenticationException.cs" />
   </ItemGroup>

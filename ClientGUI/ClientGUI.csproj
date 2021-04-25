@@ -79,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AsyncTools.cs" />
+    <Compile Include="AsyncRest.cs" />
     <Compile Include="ServiceSummaryUserControl.xaml.cs">
       <DependentUpon>ServiceSummaryUserControl.xaml</DependentUpon>
     </Compile>
