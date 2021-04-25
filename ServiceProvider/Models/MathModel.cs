@@ -67,20 +67,25 @@ namespace ServiceProvider.Models
         /// <returns></returns> prime number list
         public static List<int> GeneratePrimesBetween(int lower, int upper)
         {
-            if (lower < 0)
-            {
-                lower = 0;
-            }
+            //Validity check
             if (upper < lower)
             {
                 throw new ArgumentException("Upper bound must be >= lower bound");
             }
 
+            //If upper is below first prime number, return nothing
             if (upper < 2)
             {
                 //Return empty list
                 return new List<int>();
             }
+
+            //If lower is below first prime number, set it to first prime number
+            if (lower < 2)
+            {
+                lower = 2;
+            }
+
 
             //First generate the primes up to here so we can do our prime check
             List<int> primesSoFar = GeneratePrimesUpTo(lower - 1);
@@ -109,8 +114,13 @@ namespace ServiceProvider.Models
 
         public static bool IsPrime(int value)
         {
+            if (value < 2)
+            {
+                return false;
+            }
+
             bool divisible = false;
-            for (int ii = 0; ii < value / 2; ii++)
+            for (int ii = 2; ii < value / 2 + 1; ii++)
             {
                 if (value % ii == 0)
                 {

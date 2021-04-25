@@ -137,7 +137,7 @@ namespace ServiceProvider.Controllers
             if (MathModel.Instance.CheckAuthentication(input.Token))
             {
 
-                if (input.Values.Count != 1)
+                if (input.Values.Count != 2)
                     return new MathResponse(null, false, "bad number of parameters");
 
                 try
