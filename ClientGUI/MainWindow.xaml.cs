@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using RestSharp;
-using ServerInterfaceLib;
-using System.ServiceModel;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Controls;
-using APIClasses.Math;
+﻿using APIClasses.Math;
 using APIClasses.Registry;
 using APIClasses.Security;
 using Newtonsoft.Json;
+using RestSharp;
+using ServerInterfaceLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.ServiceModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using APIClasses;
 
 namespace ClientGUI
 {
@@ -37,9 +37,9 @@ namespace ClientGUI
         {
             InitializeComponent();
 
-            string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
-            string registryUrl = "https://localhost:44330/";
-            string serviceUrl = "https://localhost:44365/";
+            string authUrl = NetworkPaths.AuthenticatorUrl;
+            string registryUrl = NetworkPaths.RegistryUrl;
+            string serviceUrl = NetworkPaths.ServiceProviderUrl;
 
             _loginToken = -1;
             
@@ -149,7 +149,7 @@ namespace ClientGUI
         private void PrepareServiceTest(ServiceData serviceData)
         {
             //Check service data is valid for testing
-            if (!Formats.AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If 
+            if (!Formats.AllowedOperandTypes.Any(s => s.Equals(serviceData.OperandType))) //If service is not of allowed operand type
             {
                 MessageBox.Show($"This service cannot be tested as the given operand type '{serviceData.OperandType}' is not permitted.", "Cannot test", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;

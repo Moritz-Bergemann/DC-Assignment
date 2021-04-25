@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using APIClasses;
 using APIClasses.Registry;
 using Newtonsoft.Json;
 using RestSharp;
@@ -281,8 +282,8 @@ namespace ServicePublishingConsole
                 Environment.Exit(0);
             };
 
-            string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
-            string registryUrl = "https://localhost:44330/";
+            string authUrl = NetworkPaths.AuthenticatorUrl;
+            string registryUrl = NetworkPaths.RegistryUrl;
             App app = new App(authUrl, registryUrl);
 
             app.Run();

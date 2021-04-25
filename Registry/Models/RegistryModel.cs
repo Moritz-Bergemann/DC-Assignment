@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
+using APIClasses;
 
 namespace Registry.Models
 {
@@ -16,7 +17,7 @@ namespace Registry.Models
     {
         //Singleton management
         private static string _dataModelPath = "C:/dc-assignment-1/data.txt";
-        private static string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
+        private static string authUrl = NetworkPaths.AuthenticatorUrl;
 
         public static RegistryModel Instance
         {

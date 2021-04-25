@@ -4,13 +4,14 @@ using System.Linq;
 using System.ServiceModel;
 using System.Web;
 using System.Web.UI;
+using APIClasses;
 using ServerInterfaceLib;
 
 namespace ServiceProvider.Models
 {
     public class MathModel
     {
-        private static string authUrl = "net.tcp://localhost:8101/AuthenticationProvider";
+        private static string authUrl = NetworkPaths.AuthenticatorUrl;
         private IAuthenticationServer _authServer;
 
         public static MathModel Instance

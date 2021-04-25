@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math\AllMath.cs" />
+    <Compile Include="NetworkPaths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\AllRegistry.cs" />
     <Compile Include="Registry\Formats.cs" />
