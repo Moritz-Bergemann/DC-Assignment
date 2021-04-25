@@ -164,7 +164,6 @@ namespace ServicePublishingConsole
                 {
                     _token = token;
                     Console.WriteLine("Login successful. Authentication token changed.");
-                    Console.WriteLine($"DEBUG: New token is '{_token}'");
                 }
                 else //If login failed
                 {
