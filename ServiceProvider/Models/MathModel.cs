@@ -31,7 +31,7 @@ namespace ServiceProvider.Models
         /// Generates a list of all prime numbers from 2 up to the given upper bound (inclusive).
         /// </summary>
         /// <param name="limit"></param> upper bound
-        /// <returns></returns> prime number list
+        /// <returns>prime number list</returns> 
         public static List<int> GeneratePrimesUpTo(int limit)
         {
             if (limit < 2)
