@@ -16,7 +16,7 @@ namespace Registry.Models
     public class RegistryModel
     {
         //Singleton management
-        private static string _dataModelPath = "C:/dc-assignment-1/data.txt";
+        private static string _dataModelPath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).FullName, "data.txt");
         private static string authUrl = NetworkPaths.AuthenticatorUrl;
 
         public static RegistryModel Instance
